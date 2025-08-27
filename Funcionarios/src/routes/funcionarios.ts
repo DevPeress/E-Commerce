@@ -37,15 +37,15 @@ router.post("/", async (req: Request, res: Response) => {
   const { nome, email, cpf, idade, cep } = req.body
 
   const validos: Validar[] = [ 
-    { nome: "nome", valor: nome },
-    { nome: "email", valor: email },
-    { nome: "cpf", valor: cpf },
-    { nome: "idade", valor: idade },
-    { nome: "cep", valor: cep }
+    { nome: "Nome", valor: nome },
+    { nome: "Email", valor: email },
+    { nome: "CPF", valor: cpf },
+    { nome: "Idade", valor: idade },
+    { nome: "CEP", valor: cep }
   ]
 
   const invalidos = validos.find(info => !info.valor)
-  if (invalidos) res.status(400).json({ error: `${invalidos .nome} não informado!` });
+  if (invalidos) res.status(400).json({ error: `${invalidos.nome} não informado!` });
 
   try {
     const [rows] = await db.query<Usuarios[]>('SELECT email FROM Funcionarios WHERE email = ? LIMIT 1', [email])
@@ -67,7 +67,7 @@ router.put("/", async (req: Request, res: Response) => {
 
   if (!tipo || !valor) return res.status(400).json({ error: "Não foi inserido o que atualizar do Funcionário!"})
 
-  const validos = [ "nome", "email", "cpf", "idade", "cep" ]
+  const validos: string[] = [ "nome", "email", "cpf", "idade", "cep" ]
   if (!validos.includes(tipo)) return res.status(400).json({ error: "Tipo informado não é válido!"})
     
   try {

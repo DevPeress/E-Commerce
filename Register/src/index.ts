@@ -1,7 +1,7 @@
 import app from "./lib/express";
-import router from "./routes/register";
+import registerRouter from "./routes/register";
 
-app.use("/register", router)
+app.use("/register", registerRouter)
 
 app.listen(3002, () => {
   console.log(`🚀 Servidor rodando na porta 3002`);

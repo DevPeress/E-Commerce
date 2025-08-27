@@ -28,12 +28,12 @@ router.post("/", async (req: Request, res: Response) => {
     const { nome, email, senha, cpf, idade, cep } = req.body
 
     const validos: Validar[] = [ 
-        { nome: "nome", valor: nome },
-        { nome: "email", valor: email },
-        { nome: "senha", valor: senha },
-        { nome: "cpf", valor: cpf },
-        { nome: "idade", valor: idade },
-        { nome: "cep", valor: cep }
+        { nome: "Nome", valor: nome },
+        { nome: "Email", valor: email },
+        { nome: "Senha", valor: senha },
+        { nome: "CPF", valor: cpf },
+        { nome: "Idade", valor: idade },
+        { nome: "CEP", valor: cep }
     ]
 
     const invalidos = validos.find(info => !info.valor)

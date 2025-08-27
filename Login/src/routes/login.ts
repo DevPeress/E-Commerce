@@ -20,7 +20,6 @@ router.post("/", async (req: Request, res: Response) => {
         }
 
         const senhaCorreta: boolean = await VerificarSenha(senha,rows[0].senha)
-
         if (!senhaCorreta) return res.status(404).json({ error: "Email ou senha estão incorretos!" })
 
         return res.status(200).json({ mensagem: "Login correto!" })
