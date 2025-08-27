@@ -1,9 +1,7 @@
-import { Router } from "express";
 import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import { Usuarios, Validar } from "../types/funcionarios";
-
-const router = Router();
+import router from "../lib/router";
 
 router.get("/", async (req: Request, res: Response) => {
   try {

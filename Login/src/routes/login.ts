@@ -1,10 +1,8 @@
-import { Router } from "express";
 import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import VerificarSenha from "../lib/bcrypt";
 import { Login } from "../types/login";
-
-const router = Router()
+import router from "../lib/router";
 
 router.post("/", async (req: Request, res: Response) => {
     const { email, senha } = req.body
