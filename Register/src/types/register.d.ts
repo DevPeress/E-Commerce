@@ -1,0 +1,16 @@
+import { RowDataPacket } from "mysql2"
+
+export interface Register extends RowDataPacket {
+    id: number
+    nome: string
+    email: string
+    senha: string
+    cpf: string
+    idade: number
+    cep: string
+}
+
+export interface Validar {
+    nome: string
+    valor: string | null
+}
