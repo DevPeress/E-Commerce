@@ -53,7 +53,8 @@ npm run dev
 - GET /funcionarios/:id – Exibe detalhes de um funcionário
 - POST /funcionarios – Cria um novo funcionário
 - PUT /funcionarios – Atualiza as informações de um funcionário
-- DELETE /funcionarios/:id – Remove um funcionário
+- DELETE /funcionarios – Remove um funcionário
+- DELETE /funcionarios/all – Remove todos os funcionários
 ```
 
 # Cargos
