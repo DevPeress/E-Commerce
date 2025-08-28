@@ -81,7 +81,7 @@ router.put("/", async (req: Request, res: Response) => {
   }
 })
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/all", async (req: Request, res: Response) => {
   try {
     await db.execute('DELETE FROM Funcionarios')
     return res.status(200).json({ success: true, message: "Funcionários deletados" })
@@ -91,8 +91,8 @@ router.delete("/", async (req: Request, res: Response) => {
   }
 })
 
-router.delete("/:id", async (req: Request, res: Response) => {
-  const id  = parseInt(req.params.id)
+router.delete("/", async (req: Request, res: Response) => {
+  const { id } = req.body as { id: number }
   if (!id) return res.status(400).json({ error: "ID não informado!"})
 
   try {
