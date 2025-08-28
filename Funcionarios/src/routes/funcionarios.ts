@@ -5,7 +5,7 @@ import router from "../lib/router";
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const [rows] = await db.query<Usuarios[]>('SELECT * FROM Funcionarios')
+    const [rows] = await db.query<Usuarios[]>('SELECT f.id, f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id')
     return res.json(rows)
   } catch (err) {
     console.error("MicroServiço Funcionários GET: ", err)
@@ -18,7 +18,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   if (!id) return res.status(400).json({ error: "ID não informado!"})
 
   try {
-    const [rows] = await db.query<Usuarios[]>('SELECT nome, email, cpf, idade, cep FROM Funcionarios WHERE id = ? LIMIT 1', [id])
+    const [rows] = await db.query<Usuarios[]>('SELECT f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id WHERE f.id = ? LIMIT 1', [id])
 
     if (rows.length === 0) {
       return res.status(404).json({ error: "Funcionário não existente!" });
@@ -32,14 +32,15 @@ router.get("/:id", async (req: Request, res: Response) => {
 })
 
 router.post("/", async (req: Request, res: Response) => {
-  const { nome, email, cpf, idade, cep } = req.body as { nome: string, email: string, cpf: string, idade: number, cep: string }
+  const { nome, email, cpf, idade, cep, cargo } = req.body as { nome: string, email: string, cpf: string, idade: number, cep: string, cargo: number }
 
   const validos: Validar[] = [ 
     { nome: "Nome", valor: nome },
     { nome: "Email", valor: email },
     { nome: "CPF", valor: cpf },
     { nome: "Idade", valor: idade },
-    { nome: "CEP", valor: cep }
+    { nome: "CEP", valor: cep },
+    { nome: "Cargo", valor: cargo }
   ]
 
   const invalidos = validos.find(info => !info.valor)
@@ -52,7 +53,7 @@ router.post("/", async (req: Request, res: Response) => {
     const [rows2] = await db.query<Usuarios[]>('SELECT cpf FROM Funcionarios WHERE cpf = ? LIMIT 1', [cpf])
     if (rows2.length !== 0) return res.status(409).json({ error: "CPF já está cadastrado na Empresa!" })
 
-    await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep) VALUES(?,?,?,?,?)', [nome, email, cpf, idade, cep])
+    await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [nome, email, cpf, idade, cep, cargo])
     return res.status(200).json({ success: true, message: "Usuário criado com sucesso!" })
   } catch(err) {
     console.error("MicroServiço Funcionários POST: ", err)
@@ -65,7 +66,7 @@ router.put("/", async (req: Request, res: Response) => {
 
   if (!tipo || !valor) return res.status(400).json({ error: "Não foi inserido o que atualizar do Funcionário!"})
 
-  const validos: string[] = [ "nome", "email", "cpf", "idade", "cep" ]
+  const validos: string[] = [ "nome", "email", "cpf", "idade", "cep", "cargo_id" ]
   if (!validos.includes(tipo)) return res.status(400).json({ error: "Tipo informado não é válido!"})
     
   try {
@@ -77,6 +78,16 @@ router.put("/", async (req: Request, res: Response) => {
   } catch(err) {
     console.error("MicroServiço Funcionários PUT: ", err)
     return res.status(500).json({ error: "Erro ao atualizar informações do Funcionário!" })
+  }
+})
+
+router.delete("/", async (req: Request, res: Response) => {
+  try {
+    await db.execute('DELETE FROM Funcionarios')
+    return res.status(200).json({ success: true, message: "Funcionários deletados" })
+  } catch(err) {
+    console.error("MicroServiço Funcionários DELETE: ", err)
+    return res.status(500).json({ error: "Erro ao deletar funcionários: " })
   }
 })
 

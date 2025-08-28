@@ -7,6 +7,7 @@ export interface Usuarios extends RowDataPacket {
     cpf: string
     idade: number
     cep: string
+    cargo: number
 }
 
 export interface Validar {
