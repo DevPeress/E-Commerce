@@ -53,7 +53,7 @@ router.post("/", async (req: Request, res: Response) => {
     if (rows2.length !== 0) return res.status(409).json({ error: "CPF já está cadastrado na Empresa!" })
 
     await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep) VALUES(?,?,?,?,?)', [nome, email, cpf, idade, cep])
-    return res.status(200).json({ mensagem: "Usuário criado com sucesso!" })
+    return res.status(200).json({ success: true, message: "Usuário criado com sucesso!" })
   } catch(err) {
     console.error("MicroServiço Funcionários POST: ", err)
     return res.status(500).json({ error: "Erro ao criar Funcionário novo!" })
@@ -92,7 +92,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
     }
 
     await db.execute('DELETE FROM Funcionarios WHERE id = ?', [id])
-    return res.status(200).json({ mensagem: "Funcionário deletado" })
+    return res.status(200).json({ success: true, message: "Funcionário deletado" })
   } catch(err) {
     console.error("MicroServiço Funcionários DELETE/:ID: ", err)
     return res.status(500).json({ error: "Erro ao deletar funcionário de Registro: " + id })

@@ -15,7 +15,7 @@ router.get("/:email", async (req: Request, res: Response) => {
             return res.status(404).json({ error: "Email já possui cadastro!" })
         }
 
-        return res.status(200).json({ mensagem: "Conta pode ser criada!" })
+        return res.status(200).json({ success: true, message: "Conta pode ser criada!" })
     } catch(err) {
         console.error("MicroServiço Register GET/:EMAIL ", err)
         return res.status(500).json({ error: "Erro ao buscar email no cadastro!" })
@@ -46,7 +46,7 @@ router.post("/", async (req: Request, res: Response) => {
 
         const senhaProtegida: string = await Criptografar(senha)
         await db.execute('INSERT INTO Clientes(nome,email,senha,cpf,idade,cep) VALUES(?,?,?,?,?,?)', [ nome, email, senhaProtegida, cpf, idade, cep])
-        return res.status(201).json({ mensagem: "Conta criada com Sucesso!" })
+        return res.status(201).json({ success: true, message: "Conta criada com Sucesso!" })
     } catch(err) {
         console.error("MicroServiço Register POST/:EMAIL ", err)
         return res.status(500).json({ error: "Erro ao buscar email no cadastro!" })

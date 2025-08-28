@@ -36,7 +36,7 @@ router.post("/", async (req: Request, res: Response) => {
         if (rows.length !== 0) return res.status(409).json({ error: "Cargo já está cadastrado na Empresa!" })
     
         await db.execute('INSERT INTO Cargos(cargo,perms) VALUES(?,?)', [cargo, perms])
-        return res.status(200).json({ mensagem: "Cargo criado com sucesso!" })
+        return res.status(200).json({ success: true, message: "Cargo criado com sucesso!" })
      } catch(err) {
         console.error("MicroServiço Cargos POST: ", err)
         return res.status(500).json({ error: "Erro ao criar o cargo!" })
@@ -91,7 +91,7 @@ router.delete("/", async (req: Request, res: Response) => {
         if (rows.length === 0) return res.status(404).json({ error: "Cargo inexistente na empresa!" })
             
         await db.execute('DELETE FROM Cargos WHERE id = ?', [id])
-        return res.status(200).json({ mensagem: "Cargo deletado!" })
+        return res.status(200).json({ success: true, message: "Cargo deletado!" })
     } catch(err) {
         console.error("MicroServiço Cargos DELETE: ", err)
         return res.status(500).json({ error: "Erro ao deletar o cargo!" })
@@ -100,5 +100,5 @@ router.delete("/", async (req: Request, res: Response) => {
 
 router.delete("/all", async (req: Request, res: Response) => {
     await db.query('DELETE FROM Cargos')
-    return res.status(200).json({ mensagem: "Cargos deletados!" })
+    return res.status(200).json({ success: true, message: "Cargos deletados!" })
 })

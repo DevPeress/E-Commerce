@@ -20,7 +20,7 @@ router.post("/", async (req: Request, res: Response) => {
         const senhaCorreta: boolean = await VerificarSenha(senha,rows[0].senha)
         if (!senhaCorreta) return res.status(404).json({ error: "Email ou senha estão incorretos!" })
 
-        return res.status(200).json({ mensagem: "Login correto!" })
+        return res.status(200).json({ success: true, message: "Login correto!" })
     } catch(err) {
         console.error("MicroServiço Login GET ", err)
         return res.status(500).json({ error: "Erro ao buscar login nos usuários!" })
