@@ -27,7 +27,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 })
 
 router.post("/", async (req: Request, res: Response) => {
-    const { cargo, perms } = req.body as { cargo: string, perms: [] }
+    const { cargo, perms } = req.body as { cargo: string, perms: string[] }
 
     if (!cargo) return res.status(400).json({ error: "Cargo não definido!" })
 
@@ -44,14 +44,14 @@ router.post("/", async (req: Request, res: Response) => {
 })
 
 router.put("/", async (req: Request, res: Response) => {
-    const { id, perms } = req.body as { id: number, perms: [] }
+    const { id, perms } = req.body as { id: number, perms: string[] }
     if (!id) return res.status(400).json({ error: "ID não definido!" })
     
     try {
-        const [rows] = await db.query<Cargos[]>('SELECT id FROM Cargos WHERE cargo = ?', [id])
+        const [rows] = await db.query<Cargos[]>('SELECT id FROM Cargos WHERE id = ?', [id])
         if (rows.length === 0) return res.status(404).json({ error: "Cargo inexistente na Empresa!" })
 
-        const infos = await db.execute('UPDATE SET perms = ? WHERE id = ?', [perms, id])
+        const [infos] = await db.execute('UPDATE Cargos SET perms = ? WHERE id = ?', [JSON.stringify(perms), id])
         return res.json(infos)
     } catch(err) {
         console.error("MicroServiço Cargos PUT: ", err)
@@ -63,24 +63,22 @@ router.put("/all", async (req: Request, res: Response) => {
     const { ajustes } = req.body as { ajustes: Criar[] }
     if (!ajustes || !Array.isArray(ajustes)) return res.status(400).json({ error: "Ajuste inviados de forma inválida!" })
 
+    const connection = await db.getConnection()
     try {
-        const [rows] = await db.query<Cargos[]>('SELECT * FROM Cargos') // CACHE
+        await connection.beginTransaction()
 
-        await db.query('DELETE FROM Cargos')
+        await connection.query('DELETE FROM Cargos')
 
-        try {
-            await Promise.all(ajustes.map((infos) => db.execute("INSERT INTO Cargos(cargo, perms) VALUES(?, ?)", [infos.cargo, infos.perms])));
+        await Promise.all(ajustes.map((infos) => connection.execute("INSERT INTO Cargos(cargo, perms) VALUES(?, ?)",[infos.cargo, JSON.stringify(infos.perms)])))
 
-            return res.json({ success: true, message: "Cargos atualizados com sucesso!" });
-        } catch (err) {
-            await Promise.all(rows.map((infos) => db.execute("INSERT INTO Cargos(cargo, perms) VALUES(?, ?)", [infos.cargo, infos.perms])));
-
-            console.error("Erro ao inserir novos cargos, rollback executado:", err);
-            return res.status(500).json({ error: "Erro ao inserir novos cargos, rollback feito!" });
-        }
+        await connection.commit()
+        return res.json({ success: true, message: "Cargos atualizados com sucesso!" })
     } catch(err) {
+        await connection.rollback()
         console.error("MicroServiço Cargos PUT/ALL: ", err)
         return res.status(500).json({ error: "Erro ao atualizar os cargos!" })
+    } finally {
+        connection.release()
     }
 })
 
