@@ -23,7 +23,7 @@ router.get("/:email", async (req: Request, res: Response) => {
 })
 
 router.post("/", async (req: Request, res: Response) => {
-    const { nome, email, senha, cpf, idade, cep } = req.body
+    const { nome, email, senha, cpf, idade, cep } = req.body as { nome: string, email: string, senha: string, cpf: string, idade: number, cep: string }
 
     const validos: Validar[] = [ 
         { nome: "Nome", valor: nome },

@@ -32,7 +32,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 })
 
 router.post("/", async (req: Request, res: Response) => {
-  const { nome, email, cpf, idade, cep } = req.body
+  const { nome, email, cpf, idade, cep } = req.body as { nome: string, email: string, cpf: string, idade: number, cep: string }
 
   const validos: Validar[] = [ 
     { nome: "Nome", valor: nome },
@@ -61,7 +61,7 @@ router.post("/", async (req: Request, res: Response) => {
 })
 
 router.put("/", async (req: Request, res: Response) => {
-  const { id, tipo, valor } = req.body
+  const { id, tipo, valor } = req.body as { id: number, tipo: string, valor: string }
 
   if (!tipo || !valor) return res.status(400).json({ error: "Não foi inserido o que atualizar do Funcionário!"})
 
@@ -81,7 +81,7 @@ router.put("/", async (req: Request, res: Response) => {
 })
 
 router.delete("/:id", async (req: Request, res: Response) => {
-  const { id } = req.params
+  const id  = parseInt(req.params.id)
   if (!id) return res.status(400).json({ error: "ID não informado!"})
 
   try {

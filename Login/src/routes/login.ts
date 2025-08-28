@@ -5,7 +5,7 @@ import { Login } from "../types/login";
 import router from "../lib/router";
 
 router.post("/", async (req: Request, res: Response) => {
-    const { email, senha } = req.body
+    const { email, senha } = req.body as { email: string, senha: string }
 
     if (!email) return res.status(400).json({ error: "Email não informado" })
     if (!senha) return res.status(400).json({ error: "Senha não informado" })

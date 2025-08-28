@@ -11,5 +11,5 @@ export interface Usuarios extends RowDataPacket {
 
 export interface Validar {
     nome: string
-    valor: string | null
+    valor: string | number | null
 }
