@@ -102,3 +102,5 @@ router.delete("/all", async (req: Request, res: Response) => {
     await db.query('DELETE FROM Cargos')
     return res.status(200).json({ success: true, message: "Cargos deletados!" })
 })
+
+export default router

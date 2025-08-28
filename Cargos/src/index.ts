@@ -1,10 +1,8 @@
 import app from "./lib/express";
-import type { Request, Response } from "express";
+import routerCargos from "./lib/router";
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World com TypeScript!");
-});
+app.use('/cargos', routerCargos)
 
-app.listen(3000, () => {
-  console.log(`🚀 Servidor rodando na porta 3000`);
+app.listen(3004, () => {
+  console.log(`🚀 Microserviço de Cargos rodando na porta 3004`);
 });
