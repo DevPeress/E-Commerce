@@ -47,7 +47,7 @@ router.post("/", async (req: Request, res: Response) => {
 
   try {
     const [rows] = await db.query<Usuarios[]>('SELECT email FROM Funcionarios WHERE email = ? LIMIT 1', [email])
-    if (rows.length !== 0) return res.status(409).json({ error: "Email já está cadastrado na Empresa!" })
+    if (rows.length !== 0) return  
 
     const [rows2] = await db.query<Usuarios[]>('SELECT cpf FROM Funcionarios WHERE cpf = ? LIMIT 1', [cpf])
     if (rows2.length !== 0) return res.status(409).json({ error: "CPF já está cadastrado na Empresa!" })
