@@ -7,6 +7,6 @@ export interface Cargos extends RowDataPacket {
 }
 
 export interface Criar {
-    cargo: string
+    id: number
     perms: []
 }

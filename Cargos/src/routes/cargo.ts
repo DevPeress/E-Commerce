@@ -67,9 +67,7 @@ router.put("/all", async (req: Request, res: Response) => {
     try {
         await connection.beginTransaction()
 
-        await connection.query('DELETE FROM Cargos')
-
-        await Promise.all(ajustes.map((infos) => connection.execute("INSERT INTO Cargos(cargo, perms) VALUES(?, ?)",[infos.cargo, JSON.stringify(infos.perms)])))
+        await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Cargos SET perms = ? WHERE id = ?",[infos.id, JSON.stringify(infos.perms)])))
 
         await connection.commit()
         return res.json({ success: true, message: "Cargos atualizados com sucesso!" })
