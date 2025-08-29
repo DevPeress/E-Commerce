@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt'
 
-function Criptografar(senha: string) {
-    return bcrypt.hash(senha,10)
+async function Criptografar(senha: string) {
+    const salt = await bcrypt.genSalt(10);  
+    const hashedPassword = await bcrypt.hash(senha, salt);
+    return hashedPassword
 }
 
 export default Criptografar
