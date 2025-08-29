@@ -36,7 +36,7 @@ router.post("/", async (req: Request, res: Response) => {
         if (rows.length !== 0) return res.status(409).json({ error: "Cargo já está cadastrado na Empresa!" })
     
         await db.execute('INSERT INTO Cargos(cargo,perms) VALUES(?,?)', [cargo, perms])
-        return res.status(200).json({ success: true, message: "Cargo criado com sucesso!" })
+        return res.status(201).json({ success: true, message: "Cargo criado com sucesso!" })
      } catch(err) {
         console.error("MicroServiço Cargos POST: ", err)
         return res.status(500).json({ error: "Erro ao criar o cargo!" })

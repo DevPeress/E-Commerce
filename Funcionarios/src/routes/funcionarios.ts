@@ -54,7 +54,7 @@ router.post("/", async (req: Request, res: Response) => {
     if (rows2.length !== 0) return res.status(409).json({ error: "CPF já está cadastrado na Empresa!" })
 
     await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [nome, email, cpf, idade, cep, cargo])
-    return res.status(200).json({ success: true, message: "Usuário criado com sucesso!" })
+    return res.status(201).json({ success: true, message: "Usuário criado com sucesso!" })
   } catch(err) {
     console.error("MicroServiço Funcionários POST: ", err)
     return res.status(500).json({ error: "Erro ao criar Funcionário novo!" })
