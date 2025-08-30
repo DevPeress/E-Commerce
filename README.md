@@ -69,6 +69,18 @@ npm run dev
 - DELETE /cargo/all – Remove todos os cargos
 ```
 
+# Produtos
+
+```
+- GET /produtos – Lista todos os produtos
+- GET /produtos/:id – Exibe detalhes de um produto
+- GET /produtos/:nome – Exibe detalhes de um produto
+- POST /produtos – Cria um novo produto
+- PUT /produtos – Atualiza as informações de um produto
+- DELETE /produtos – Remove um produto
+- DELETE /produtos/all – Remove todos os produto
+```
+
 # Login
 
 ```
