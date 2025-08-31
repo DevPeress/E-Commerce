@@ -9,8 +9,3 @@ export interface Register extends RowDataPacket {
     idade: number
     cep: string
 }
-
-export interface Validar {
-    nome: string
-    valor: string | number | null
-}

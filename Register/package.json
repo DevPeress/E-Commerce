@@ -23,7 +23,8 @@
   "dependencies": {
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",
-    "mysql2": "^3.14.3"
+    "mysql2": "^3.14.3",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
