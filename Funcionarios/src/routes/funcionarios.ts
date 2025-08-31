@@ -81,6 +81,27 @@ router.put("/", async (req: Request, res: Response) => {
   }
 })
 
+router.put("/all", async (req: Request, res: Response) => {
+  const { ajustes } = req.body as { ajustes: Usuarios[] }
+  if (!ajustes || !Array.isArray(ajustes)) return res.status(400).json({ error: "Ajuste inviados de forma inválida!" })
+
+  const connection = await db.getConnection()
+  try {
+    await connection.beginTransaction()
+
+    await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Funcionarios SET nome = ?, email = ?, cpf = ?, idade = ?, cep = ?, cargo = ? WHERE id = ?",[infos.nome, infos.email, infos.cpf, infos.idade, infos.cep, infos.cargo, infos.id])))
+
+    await connection.commit()
+    return res.json({ success: true, message: "Cargos atualizados com sucesso!" })
+  } catch(err) {
+    await connection.rollback()
+    console.error("MicroServiço Cargos PUT/ALL: ", err)
+    return res.status(500).json({ error: "Erro ao atualizar os cargos!" })
+  } finally {
+    connection.release()
+  }
+})
+
 router.delete("/all", async (req: Request, res: Response) => {
   try {
     await db.execute('DELETE FROM Funcionarios')
