@@ -9,8 +9,3 @@ export interface Usuarios extends RowDataPacket {
     cep: string
     cargo: number
 }
-
-export interface Validar {
-    nome: string
-    valor: string | number | null
-}

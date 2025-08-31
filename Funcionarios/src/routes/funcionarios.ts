@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import router from "../lib/router";
-import type { Usuarios, Validar } from "../types/funcionarios";
+import type { Usuarios } from "../types/funcionarios";
 import { validate } from "../middlewares/validate";
 import { FuncionarioInput, funcionarioSchema } from "../schemas/funcionarioSchemas";
 
