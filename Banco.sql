@@ -34,3 +34,12 @@ CREATE TABLE IF NOT EXISTS `Cargos` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_cargo` (`cargo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
+
+CREATE TABLE IF NOT EXISTS `Produtos` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(255) NOT NULL,
+    `quantidade` INT DEFAULT 0,
+    `descricao` LONGTEXT DEFAULT '',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_nome` (`nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
