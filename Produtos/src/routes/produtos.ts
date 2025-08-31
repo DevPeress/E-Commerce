@@ -108,8 +108,8 @@ router.put("/all", async (req: Request, res: Response) => {
     return res.json({ success: true, message: "Produtos atualizados com sucesso!" })
   } catch(err) {
     await connection.rollback()
-    console.error("MicroServiço Cargos PUT/ALL: ", err)
-    return res.status(500).json({ error: "Erro ao atualizar os cargos!" })
+    console.error("MicroServiço Produtos PUT/ALL: ", err)
+    return res.status(500).json({ error: "Erro ao atualizar os Produtos!" })
   } finally {
     connection.release()
   }

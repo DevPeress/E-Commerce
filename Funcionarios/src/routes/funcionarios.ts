@@ -92,11 +92,11 @@ router.put("/all", async (req: Request, res: Response) => {
     await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Funcionarios SET nome = ?, email = ?, cpf = ?, idade = ?, cep = ?, cargo = ? WHERE id = ?",[infos.nome, infos.email, infos.cpf, infos.idade, infos.cep, infos.cargo, infos.id])))
 
     await connection.commit()
-    return res.json({ success: true, message: "Cargos atualizados com sucesso!" })
+    return res.json({ success: true, message: "Funcionarios atualizados com sucesso!" })
   } catch(err) {
     await connection.rollback()
-    console.error("MicroServiço Cargos PUT/ALL: ", err)
-    return res.status(500).json({ error: "Erro ao atualizar os cargos!" })
+    console.error("MicroServiço Funcionarios PUT/ALL: ", err)
+    return res.status(500).json({ error: "Erro ao atualizar os Funcionarios!" })
   } finally {
     connection.release()
   }
