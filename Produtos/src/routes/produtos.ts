@@ -33,7 +33,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 })
 
 router.get("/:nome", async (req: Request, res: Response) => {
-    const nome: string = req.params.id
+    const nome: string = req.params.nome
     if (!nome) return res.status(400).json({ error: "Nome não informado do produto!" })
 
     try {
