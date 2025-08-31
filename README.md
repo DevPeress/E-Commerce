@@ -11,6 +11,7 @@ Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco n
 - [TypeScript](https://www.typescriptlang.org/)
 - [MySQL](https://www.mysql.com/)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- [Zod](https://zod.dev)
 
 ## ✨ Funcionalidades
 
