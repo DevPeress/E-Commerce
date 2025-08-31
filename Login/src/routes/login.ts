@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import VerificarSenha from "../lib/bcrypt";
-import { Login } from "../types/login";
 import router from "../lib/router";
+import type { Login } from "../types/login";
 
 router.post("/", async (req: Request, res: Response) => {
     const { email, senha } = req.body as { email: string, senha: string }

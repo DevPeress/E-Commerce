@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import Criptografar from "../lib/bcrypt";
-import { Register, Validar } from "../types/register";
 import router from "../lib/router";
+import type { Register, Validar } from "../types/register";
 
 router.get("/:email", async (req: Request, res: Response) => {
     const email: string = req.params.email
