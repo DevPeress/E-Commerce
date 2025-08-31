@@ -94,6 +94,27 @@ router.put("/", async (req: Request, res: Response) => {
     }
 })
 
+router.put("/all", async (req: Request, res: Response) => {
+  const { ajustes } = req.body as { ajustes: Produtos[] }
+  if (!ajustes || !Array.isArray(ajustes)) return res.status(400).json({ error: "Ajuste inviados de forma inválida!" })
+
+  const connection = await db.getConnection()
+  try {
+    await connection.beginTransaction()
+
+    await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Produtos SET nome = ?, quantidade = ?, descricao = ? WHERE id = ?", [infos.nome, infos.quantidade, infos.descricao, infos.id])))
+
+    await connection.commit()
+    return res.json({ success: true, message: "Produtos atualizados com sucesso!" })
+  } catch(err) {
+    await connection.rollback()
+    console.error("MicroServiço Cargos PUT/ALL: ", err)
+    return res.status(500).json({ error: "Erro ao atualizar os cargos!" })
+  } finally {
+    connection.release()
+  }
+})
+
 router.delete("/", async (req: Request, res: Response) => {
     const { id } = req.body as { id: number }
     if (!id) return res.status(400).json({ error: "ID não informado do produto!" })
