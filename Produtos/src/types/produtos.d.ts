@@ -6,8 +6,3 @@ export interface Produtos extends RowDataPacket {
     quantidade: number
     descricao: string
 }
-
-export interface Validar {
-    nome: string
-    valor: string | number | null
-}

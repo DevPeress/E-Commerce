@@ -1,7 +1,10 @@
 import type { Request, Response } from "express";
 import router from '../lib/router'
 import db from '../lib/mysql';
-import type { Produtos, Validar } from '../types/produtos';
+import type { Produtos } from '../types/produtos';
+import { validate } from "../middlewares/validate";
+import { InsertInput, insertSchema } from "../schemas/insertSchemas";
+import { UpdateInput, updateSchema } from "../schemas/updateSchemas";
 
 router.get("/", async (req: Request, res: Response) => {
     try {
@@ -48,21 +51,11 @@ router.get("/:nome", async (req: Request, res: Response) => {
     }
 })
 
-router.post("/", async (req: Request, res: Response) => {
-    const { nome, quantidade, descricao } = req.body as { nome: string, quantidade: number, descricao: string }
-
-    const validos: Validar[] = [
-        { nome: "Nome", valor: nome },
-        { nome: "Quantidade", valor: quantidade },
-        { nome: "Descrição", valor: descricao },
-        { nome: "Nome", valor: nome }
-    ]
-
-    const invalidos = validos.find(info => !info.valor)
-    if (invalidos) return res.status(400).json({ error: invalidos.nome + " não informado!" })
+router.post("/", validate(insertSchema), async (req: Request, res: Response) => {
+    const data = req.body as InsertInput
 
     try {
-        const [rows] = await db.execute('INSERT INTO Produtos(nome,quantidade,descricao) VALUES(?,?,?)', [nome, quantidade, descricao])
+        const [rows] = await db.execute('INSERT INTO Produtos(nome,quantidade,descricao) VALUES(?,?,?)', [data.nome, data.quantidade, data.descricao])
         return res.json(rows)
     } catch(err) {
         console.error("MicroServiço Produtos POST: ", err)
@@ -70,23 +63,14 @@ router.post("/", async (req: Request, res: Response) => {
     }
 })
 
-router.put("/", async (req: Request, res: Response) => {
-    const { id, tipo, valor } = req.body as { id: number, tipo: string, valor: string | number }
-    
-    const validos: Validar[] = [
-        { nome: "ID", valor: id },
-        { nome: "Tipo", valor: tipo },
-        { nome: "Valor", valor: valor }
-    ]
+router.put("/", validate(updateSchema),async (req: Request, res: Response) => {
+    const data = req.body as UpdateInput
 
-    const invalidos = validos.find(info => !info.valor)
-    if (invalidos) return res.status(400).json({ error: invalidos.nome + " não informado!" })
-    
     try {
-        const [rows] = await db.query<Produtos[]>('SELECT id FROM Produtos WHERE id = ?', [id])
+        const [rows] = await db.query<Produtos[]>('SELECT id FROM Produtos WHERE id = ?', [data.id])
         if (rows.length === 0) return res.status(400).json({ error: "Produto inexistente!" })
 
-        await db.execute(`UPDATE Produtos SET ${tipo} = ? WHERE id = ?`, [valor, id])
+        await db.execute(`UPDATE Produtos SET ${data.tipo} = ? WHERE id = ?`, [data.valor, data.id])
         return res.status(200).json({ message: "Produto atualizado com sucesso!" })
     } catch(err) {
         console.error("MicroServiço Produtos PUT: ", err)
