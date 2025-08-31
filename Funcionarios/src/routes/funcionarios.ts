@@ -2,6 +2,8 @@ import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import router from "../lib/router";
 import type { Usuarios, Validar } from "../types/funcionarios";
+import { validate } from "../middlewares/validate";
+import { FuncionarioInput, funcionarioSchema } from "../schemas/funcionarioSchemas";
 
 router.get("/", async (req: Request, res: Response) => {
   try {
@@ -31,29 +33,17 @@ router.get("/:id", async (req: Request, res: Response) => {
   }
 })
 
-router.post("/", async (req: Request, res: Response) => {
-  const { nome, email, cpf, idade, cep, cargo } = req.body as { nome: string, email: string, cpf: string, idade: number, cep: string, cargo: number }
-
-  const validos: Validar[] = [ 
-    { nome: "Nome", valor: nome },
-    { nome: "Email", valor: email },
-    { nome: "CPF", valor: cpf },
-    { nome: "Idade", valor: idade },
-    { nome: "CEP", valor: cep },
-    { nome: "Cargo", valor: cargo }
-  ]
-
-  const invalidos = validos.find(info => !info.valor)
-  if (invalidos) res.status(400).json({ error: `${invalidos.nome} não informado!` });
+router.post("/", validate(funcionarioSchema), async (req: Request, res: Response) => {
+  const data = req.body as FuncionarioInput
 
   try {
-    const [rows] = await db.query<Usuarios[]>('SELECT email FROM Funcionarios WHERE email = ? LIMIT 1', [email])
+    const [rows] = await db.query<Usuarios[]>('SELECT email FROM Funcionarios WHERE email = ? LIMIT 1', [data.email])
     if (rows.length !== 0) return  
 
-    const [rows2] = await db.query<Usuarios[]>('SELECT cpf FROM Funcionarios WHERE cpf = ? LIMIT 1', [cpf])
+    const [rows2] = await db.query<Usuarios[]>('SELECT cpf FROM Funcionarios WHERE cpf = ? LIMIT 1', [data.cpf])
     if (rows2.length !== 0) return res.status(409).json({ error: "CPF já está cadastrado na Empresa!" })
 
-    await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [nome, email, cpf, idade, cep, cargo])
+    await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [data.nome, data.email, data.cpf, data.idade, data.cep, data.cargo_id])
     return res.status(201).json({ success: true, message: "Usuário criado com sucesso!" })
   } catch(err) {
     console.error("MicroServiço Funcionários POST: ", err)
