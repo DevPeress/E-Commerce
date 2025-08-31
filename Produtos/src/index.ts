@@ -3,6 +3,6 @@ import produtosRouter from './routes/produtos'
 
 app.use("/produtos", produtosRouter)
 
-app.listen(3000, () => {
-  console.log(`🚀 Servidor rodando na porta 3000`);
+app.listen(3005, () => {
+  console.log(`🚀 Microserviço de Cargos rodando na porta 3005`);
 });
