@@ -4,44 +4,34 @@ import router from "../lib/router";
 import type { Usuarios } from "../types/funcionarios";
 import { validate } from "../middlewares/validate";
 import { FuncionarioInput, funcionarioSchema } from "../schemas/funcionarioSchemas";
+import { funcionariosDB } from "../database/databaseFuncionarios";
+import { error } from "console";
 
 router.get("/", async (req: Request, res: Response) => {
-  try {
-    const [rows] = await db.query<Usuarios[]>('SELECT f.id, f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id')
-    return res.json(rows)
-  } catch (err) {
-    console.error("MicroServiço Funcionários GET: ", err)
-    return res.status(500).json({ error: "Erro ao buscar funcionários" });
-  }
+  const dados = await funcionariosDB.getAll()
+  if (!dados.sucess) return res.json(404).json({ error: dados.error })
+  return res.json(dados.data)
 })
 
 router.get("/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id)
   if (!id) return res.status(400).json({ error: "ID não informado!"})
 
-  try {
-    const [rows] = await db.query<Usuarios[]>('SELECT f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id WHERE f.id = ? LIMIT 1', [id])
-
-    if (rows.length === 0) {
-      return res.status(404).json({ error: "Funcionário não existente!" });
-    }
-
-    return res.json(rows[0])
-  } catch(err) {
-    console.error("MicroServiço Funcionários GET/:ID: ", err)
-    return res.status(500).json({ error: "Erro ao buscar funcionário de Registro: " + id })
-  }
+  const dados = await funcionariosDB.getById(id)
+  if (!dados.sucess) return res.status(404).json({ error: dados.error })
+  
+  return res.json(dados.data)
 })
 
 router.post("/", validate(funcionarioSchema), async (req: Request, res: Response) => {
   const data = req.body as FuncionarioInput
 
   try {
-    const [rows] = await db.query<Usuarios[]>('SELECT email FROM Funcionarios WHERE email = ? LIMIT 1', [data.email])
-    if (rows.length !== 0) return  
+    const dados = await funcionariosDB.getByEmail(data.email)
+    if (dados) return res.status(409).json({ error: "Email já possui cadastro na empresa!" })
 
-    const [rows2] = await db.query<Usuarios[]>('SELECT cpf FROM Funcionarios WHERE cpf = ? LIMIT 1', [data.cpf])
-    if (rows2.length !== 0) return res.status(409).json({ error: "CPF já está cadastrado na Empresa!" })
+    const dados2 = await funcionariosDB.getByCpf(data.cpf)
+    if (dados2) return res.status(409).json({ error: "CPF já possui cadastro na empresa!" })
 
     await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [data.nome, data.email, data.cpf, data.idade, data.cep, data.cargo_id])
     return res.status(201).json({ success: true, message: "Usuário criado com sucesso!" })
@@ -59,66 +49,39 @@ router.put("/", async (req: Request, res: Response) => {
   const validos: string[] = [ "nome", "email", "cpf", "idade", "cep", "cargo_id" ]
   if (!validos.includes(tipo)) return res.status(400).json({ error: "Tipo informado não é válido!"})
     
-  try {
-    const [rows] = await db.query<Usuarios[]>('SELECT id FROM Funcionarios WHERE id = ? LIMIT 1', [id])
-    if (rows.length === 0) return res.status(404).json({ error: "Funcionário inexistente!" })
+  const dados = await funcionariosDB.getById(id)
+  if (!dados.sucess) return res.status(404).json({ error: dados.error })
+  
+  const insert = await funcionariosDB.putFuncionario(tipo, id, valor)
+  if (!insert.sucess) return res.status(404).json({ error: insert.error })
 
-    const [edit] = await db.execute(`UPDATE Funcionarios SET ${tipo} = ? WHERE id = ?`, [valor, id])
-    return res.status(200).json(edit)
-  } catch(err) {
-    console.error("MicroServiço Funcionários PUT: ", err)
-    return res.status(500).json({ error: "Erro ao atualizar informações do Funcionário!" })
-  }
+  return res.status(200).json(insert.data)
 })
 
 router.put("/all", async (req: Request, res: Response) => {
   const { ajustes } = req.body as { ajustes: Usuarios[] }
   if (!ajustes || !Array.isArray(ajustes)) return res.status(400).json({ error: "Ajuste inviados de forma inválida!" })
 
-  const connection = await db.getConnection()
-  try {
-    await connection.beginTransaction()
-
-    await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Funcionarios SET nome = ?, email = ?, cpf = ?, idade = ?, cep = ?, cargo = ? WHERE id = ?",[infos.nome, infos.email, infos.cpf, infos.idade, infos.cep, infos.cargo, infos.id])))
-
-    await connection.commit()
-    return res.json({ success: true, message: "Funcionarios atualizados com sucesso!" })
-  } catch(err) {
-    await connection.rollback()
-    console.error("MicroServiço Funcionarios PUT/ALL: ", err)
-    return res.status(500).json({ error: "Erro ao atualizar os Funcionarios!" })
-  } finally {
-    connection.release()
-  }
+  const ajustar = await funcionariosDB.putAll(ajustes)
+  if (!ajustar.sucess) return res.status(404).json({ error: ajustar.error })
+  return res.status(200).json("Cargos atualizados com sucesso!")
 })
 
 router.delete("/all", async (req: Request, res: Response) => {
-  try {
-    await db.execute('DELETE FROM Funcionarios')
-    return res.status(200).json({ success: true, message: "Funcionários deletados" })
-  } catch(err) {
-    console.error("MicroServiço Funcionários DELETE: ", err)
-    return res.status(500).json({ error: "Erro ao deletar funcionários: " })
-  }
+  const dados = await funcionariosDB.deleteAll()
+  if (!dados.sucess) return res.status(404).json({ error: dados.error })
+    
+  return res.status(200).json({ message: "Todos os funcionários foram deletados!"})
 })
 
 router.delete("/", async (req: Request, res: Response) => {
   const { id } = req.body as { id: number }
   if (!id) return res.status(400).json({ error: "ID não informado!"})
 
-  try {
-    const [rows] = await db.query<Usuarios[]>('SELECT * FROM Funcionarios WHERE id = ? LIMIT 1', [id])
+  const dados = await funcionariosDB.deleteFuncionario(id)
+  if (!dados.sucess) return res.status(404).json({ error: dados.error })
 
-    if (rows.length === 0) {
-      return res.status(404).json({ error: "Funcionário não existente!" });
-    }
-
-    await db.execute('DELETE FROM Funcionarios WHERE id = ?', [id])
-    return res.status(200).json({ success: true, message: "Funcionário deletado" })
-  } catch(err) {
-    console.error("MicroServiço Funcionários DELETE/:ID: ", err)
-    return res.status(500).json({ error: "Erro ao deletar funcionário de Registro: " + id })
-  }
+  return res.status(200).json({ message: "Funcionário deletado!" })
 })
 
 export default router;
