@@ -12,7 +12,7 @@ Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco n
 - [MySQL](https://www.mysql.com/)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Zod](https://zod.dev)
-- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit)
+- [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)
 
 ## ✨ Funcionalidades
 
