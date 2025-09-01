@@ -20,6 +20,8 @@ Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco n
 - Cadastro e gerenciamento de Cargos
 - Cadastro e gerenciamento de Produtos
 - Sistema de Registro e Login
+- Limitação de Acesso aos EndPoints
+- Verificação de Dados
 
 ## ⚙️ Instalação
 
