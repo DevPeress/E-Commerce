@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import db from "../lib/mysql";
 import router from "../lib/router";
 import type { Criar } from "../types/cargos";
 import { cargosDB } from "../database/databaseCargos";
