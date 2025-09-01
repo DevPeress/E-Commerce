@@ -77,10 +77,10 @@ export const funcionariosDB = {
     async putFuncionario(tipo: string, id: number, valor: string): Promise<{ sucess: boolean, data?: Usuarios[], error?: string }> {
         try {
             const dados = await funcionariosDB.getById(id)
-            if (!dados.sucess) return { sucess: false, error: dados.error }
+            if (!dados.sucess || !dados.data) return { sucess: false, error: dados.error }
 
             const [edit] = await db.execute<Usuarios[]>(`UPDATE Funcionarios SET ${tipo} = ? WHERE id = ?`, [valor, id])
-            logger.info("Atualizou o funcionario de ID: " + id + " Tipo: " + tipo + " Valor: " + valor)
+            logger.info("Atualizou o funcionario de nome: " + dados.data[0].nome + " Tipo: " + tipo + " Valor: " + valor)
             return { sucess: true, data: edit }
         } catch(err) {
             logger.error("Funcionários PutFuncionario: " + err)
@@ -112,10 +112,10 @@ export const funcionariosDB = {
     async deleteFuncionario(id: number): Promise<{ sucess: boolean, error?: string }> {
         try {
             const dados = await funcionariosDB.getById(id)
-            if (!dados.sucess) return { sucess: false, error: dados.error }
+            if (!dados.sucess || !dados.data) return { sucess: false, error: dados.error }
 
             await db.execute('DELETE FROM Funcionarios WHERE id = ?', [id])
-            logger.info("Deletou o funcionário de ID: " + id)
+            logger.info("Deletou o funcionário de nome: " + dados.data[0].nome)
             return { sucess: true }
         } catch(err) {
             logger.error("Funcionários DeleteFuncionario: " + err)
