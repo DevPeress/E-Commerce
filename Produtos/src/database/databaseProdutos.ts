@@ -8,6 +8,7 @@ export const produtosDB = {
     async getAll(): Promise<{ sucess: boolean, data?: Produtos[], error?: string }> {
         try {
             const [rows] = await db.query<Produtos[]>('SELECT * FROM Produtos')
+            logger.info("Requisitou os produtos!")
             if (rows.length === 0) return { sucess: false, error: "Não possui produtos na empresa!" }
             return { sucess: true, data: rows }
         } catch(err) {
@@ -20,6 +21,7 @@ export const produtosDB = {
     async getById(id: number): Promise<{ sucess: boolean, data?: Produtos[], error?: string }> {
         try {
             const [rows] = await db.query<Produtos[]>('SELECT * FROM Produtos WHERE id = ?', [id])
+            logger.info("Iniciou a procura do produto com id: " + id)
             if (rows.length === 0) return { sucess: true, error: "Não foi localizado produto com esse ID!" }
             return { sucess: true, data: rows }
         } catch(err) {
@@ -32,6 +34,7 @@ export const produtosDB = {
     async getByName(nome: string): Promise<{ sucess: boolean, data?: Produtos[], error?: string }> {
         try {
             const [rows] = await db.query<Produtos[]>('SELECT * FROM Produtos WHERE nome = ?', [nome])
+            logger.info("Iniciou a procura do produto com nome: " + nome)
             if (rows.length === 0) return { sucess: false, error: "Não foi localizado produto com esse nome!" }
             return { sucess: true, data: rows }
         } catch(err) {
@@ -44,6 +47,7 @@ export const produtosDB = {
     async postProduto(data: InsertInput): Promise<{ sucess: boolean, data?: Produtos[], error?: string }> {
         try {
             const [rows] = await db.execute<Produtos[]>('INSERT INTO Produtos(nome,quantidade,descricao) VALUES(?,?,?)', [data.nome, data.quantidade, data.descricao])
+            logger.info("Adicionou o produto: " + data.nome + " com a quantidade " + data.quantidade + " com a descricao: " + data.descricao)
             return { sucess: true, data: rows }
         } catch(err) {
             logger.error("Produtos PostProduto: "+ err)
@@ -58,6 +62,7 @@ export const produtosDB = {
             if (!produto.sucess) return { sucess: false, error: produto.error }
             
             await db.execute(`UPDATE Produtos SET ${data.tipo} = ? WHERE id = ?`, [data.valor, data.id])
+            logger.info("Atualizou o produto de ID: " + data.id + " SET: " + data.tipo + " Valor:" + data.valor)
             return { sucess: true }
         } catch(err) {
             logger.error("Produtos PutProduto: "+ err)
@@ -74,6 +79,7 @@ export const produtosDB = {
             await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Produtos SET nome = ?, quantidade = ?, descricao = ? WHERE id = ?", [infos.nome, infos.quantidade, infos.descricao, infos.id])))
 
             await connection.commit()
+            logger.info("Atualizou todos os produtos: " + ajustes)
             return { sucess: true }
         } catch(err) {
             await connection.rollback()
@@ -88,6 +94,7 @@ export const produtosDB = {
     async deleteById(id: number): Promise<{ sucess: boolean, error?: string }> {
         try {
             await db.execute('DELETE FROM Produtos WHERE id = ?', [id])
+            logger.info("Deletou o produto com ID: " + id)
             return { sucess: true }
         } catch(err){
             logger.error("Produtos DeleteById: "+ err)
@@ -99,6 +106,7 @@ export const produtosDB = {
     async deleteAll(): Promise<{ sucess: boolean, error?: string }> {
         try {
             await db.execute('DELETE FROM Produtos')
+            logger.info("Deletou todos os produtos!")
             return { sucess: true }
         } catch(err){
             logger.error("Produtos DeleteAll: "+ err)

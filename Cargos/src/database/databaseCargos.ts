@@ -6,6 +6,7 @@ export const cargosDB = {
     async getAll(): Promise<{ sucess: boolean, data?: Cargos[], error?: string }>{
         try {
             const [rows] = await db.query<Cargos[]>('SELECT * FROM Cargos')
+            logger.info("Buscou a lista de cargos")
             return { sucess: true, data: rows }
         } catch(err) {
             logger.error("Cargos GetAll: " + err)
@@ -17,6 +18,7 @@ export const cargosDB = {
     async getById(id: number): Promise<{ sucess: boolean, data?: Cargos[], error?: string }> {
         try {
             const [rows] = await db.query<Cargos[]>('SELECT * FROM Cargos WHERE ID = ?', [id])
+            logger.info("Buscou o cargo de ID: " + id)
             if (rows.length > 0) return { sucess: true, data: rows }
             return { sucess: false, error: "Cargo inexistente na empresa!" }
         } catch(err) {
@@ -29,6 +31,7 @@ export const cargosDB = {
     async getByCargo(cargo: string): Promise<{ sucess: boolean, data?: Cargos[], error?: string }> {
         try {
             const [rows] = await db.query<Cargos[]>('SELECT * From Cargos WHERE cargo = ?', [cargo])
+            logger.info("Buscou o cargo: " + cargo)
             if (rows.length > 0) return { sucess: true, data: rows }
             return { sucess: false, error: "Cargo já está cadastrado na empresa!" }
         } catch(err) {
@@ -44,6 +47,7 @@ export const cargosDB = {
             if (!dados.sucess) return { sucess: false, error: dados.error }
 
             await db.execute('INSERT INTO Cargos(cargo,perms) VALUES(?,?)', [infos.cargo, infos.perms])
+            logger.info("Criou o cargo: " + infos.cargo + " com as permissões: " + infos.perms)
             return { sucess: true }
         } catch(err) {
             logger.error("Cargos PostCargo: " + err)
@@ -58,6 +62,7 @@ export const cargosDB = {
             if (!dados.sucess) return { sucess: false, error: dados.error };
 
             const [rows] = await db.execute<Cargos[]>('UPDATE Cargos SET perms = ? WHERE id = ?', [JSON.stringify(infos.perms), infos.id])
+            logger.info("Atualizou o cargo: " + infos.id + " Perms: " + infos.perms)
             return { sucess: true, data: rows }
         } catch(err) {
             logger.error("Cargos PutCargo: " + err)
@@ -75,6 +80,7 @@ export const cargosDB = {
             await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Cargos SET perms = ? WHERE id = ?",[infos.id, JSON.stringify(infos.perms)])))
 
             await connection.commit()
+            logger.info("Atualizou todos os cargos: " + ajustes)
             return { sucess: true }
         } catch(err) {
             await connection.rollback()
@@ -89,6 +95,7 @@ export const cargosDB = {
     async deleteById(id: number): Promise<{ sucess: boolean, error?: string }> {
         try {
             await db.execute('DELETE FROM Cargos WHERE id = ?', [id])
+            logger.info("Deletou o cargo de ID: " + id)
             return { sucess: true }
         } catch(err) {
             logger.error("Cargos DeleteById: " + err)
@@ -100,6 +107,7 @@ export const cargosDB = {
     async deleteAll(): Promise<{ sucess: boolean, error?: string }> {
         try {
             await db.query('DELETE FROM Cargos')
+            logger.info("Deletou todos os cargos!")
             return { sucess: true }
         } catch(err) {
             logger.error("Cargos DeleteAll: " + err)

@@ -1,3 +1,4 @@
+import { email } from "zod";
 import Criptografar from "../lib/bcrypt";
 import db from "../lib/mysql";
 import logger from "../lib/pino";
@@ -8,6 +9,8 @@ export const RegisterDB = {
     async getByEmail(email: string): Promise<{ sucess: boolean, data?: Register[], error?: string}> {
         try {
             const [rows] = await db.query<Register[]>('SELECT email FROM Clientes WHERE email = ? LIMIT 1', [email])
+            logger.info("Iniciou a procura do registro do email: " + email)
+
             if (rows.length === 0) return { sucess: false, error: "Não foi localizado o email!" }
             return { sucess: true, data: rows }
         } catch(err) {
@@ -24,6 +27,8 @@ export const RegisterDB = {
 
             const senhaProtegida: string = await Criptografar(data.senha)
             await db.execute('INSERT INTO Clientes(nome,email,senha,cpf,idade,cep) VALUES(?,?,?,?,?,?)', [data.nome, data.email, senhaProtegida, data.cpf, data.idade, data.cep])
+
+            logger.info("Cadastro do email: " + email + "na empresa!")
             return { sucess: true }
         } catch(err) {
             logger.error("Register PostRegister: " + err)

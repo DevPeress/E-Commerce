@@ -8,11 +8,16 @@ export const LoginDB = {
     async getLogin(dados: LoginInput): Promise<{ sucess: boolean, data?: Login[], error?: string }> {
         try {
             const [rows] = await db.query<Login[]>('SELECT email, senha FROM Clientes WHERE email = ? LIMIT 1', [dados.email])
+            logger.info("Iniciou a procura do email: " + dados.email)
             if (rows.length === 0) return { sucess: false, error: "Email ou senha estão incorretos!" }
 
             const senhaCorreta: boolean = await VerificarSenha(dados.senha,rows[0].senha)
-            if (!senhaCorreta) return { sucess: false, error: "Email ou senha estão incorretos!" }
-            
+            if (!senhaCorreta)  { 
+                logger.info("Digitou a senha errada!")
+                return { sucess: false, error: "Email ou senha estão incorretos!" }
+            }
+
+            logger.info("Iniciou o login!")
             return { sucess: true, data: rows }
         } catch(err) {
             logger.error("Login GetLogin: " + err)
