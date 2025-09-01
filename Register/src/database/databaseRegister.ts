@@ -1,5 +1,6 @@
 import Criptografar from "../lib/bcrypt";
 import db from "../lib/mysql";
+import logger from "../lib/pino";
 import { RegisterInput } from "../schemas/registeSchemas";
 import { Register } from "../types/register";
 
@@ -10,6 +11,7 @@ export const RegisterDB = {
             if (rows.length === 0) return { sucess: false, error: "Não foi localizado o email!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Register GetByEmail: " + err)
             console.error("Register GetByEmail: ", err)
             return { sucess: false, error: "Erro ao localizar email!"}
         }
@@ -24,6 +26,8 @@ export const RegisterDB = {
             await db.execute('INSERT INTO Clientes(nome,email,senha,cpf,idade,cep) VALUES(?,?,?,?,?,?)', [data.nome, data.email, senhaProtegida, data.cpf, data.idade, data.cep])
             return { sucess: true }
         } catch(err) {
+            logger.error("Register PostRegister: " + err)
+            console.error("Register PostRegister: ", err)
             return { sucess: false, error: "Erro ao criar conta!" }
         }
     }
