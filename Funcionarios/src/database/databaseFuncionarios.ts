@@ -2,6 +2,7 @@ import { success } from "zod";
 import db from "../lib/mysql";
 import { FuncionarioInput } from "../schemas/funcionarioSchemas";
 import { Usuarios } from "../types/funcionarios";
+import logger from "../lib/pino";
 
 export const funcionariosDB = {
     async getAll(): Promise<{ sucess: boolean, data?: Usuarios[], error?: string }> {
@@ -9,6 +10,7 @@ export const funcionariosDB = {
             const [rows] = await db.query<Usuarios[]>('SELECT f.id, f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id')
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Funcionários GetAll: " + err)
             console.error("Funcionários GetAll: ", err)
             return { sucess: false, error: "Erro ao buscar os funcionários" }
         }
@@ -20,6 +22,7 @@ export const funcionariosDB = {
             if (rows.length === 0) return { sucess: false, error: "Funcionário não existente!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Funcionários GetById: " + err)
             console.error("Funcionários GetById: ", err)
             return { sucess: false, error: "Erro ao buscar funcionário!" }
         }
@@ -31,6 +34,7 @@ export const funcionariosDB = {
             if (rows.length === 0) return { sucess: false, error: "Email não possui cadastro na empresa!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Funcionários GetByEmail: " + err)
             console.error("Funcionários GetByEmail: ", err)
             return { sucess: false, error: "Erro ao localizar funcionário!" }
         }
@@ -42,6 +46,7 @@ export const funcionariosDB = {
             if (rows.length === 0) return { sucess: false, error: "CPF não possui cadastro na empresa!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Funcionários GetByCpf: " + err)
             console.error("Funcionários GetByCpf: ", err)
             return { sucess: false, error: "Erro ao localizar funcionário!" }
         }
@@ -58,6 +63,7 @@ export const funcionariosDB = {
             await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [data.nome, data.email, data.cpf, data.idade, data.cep, data.cargo_id])
             return { sucess: true }
         } catch(err) {
+            logger.error("Funcionários PostFuncionario: " + err)
             console.error("Funcionários PostFuncionario: ", err)
             return { sucess: false, error: "Erro ao criar o funcionário!" }
         }
@@ -71,6 +77,7 @@ export const funcionariosDB = {
             const [edit] = await db.execute<Usuarios[]>(`UPDATE Funcionarios SET ${tipo} = ? WHERE id = ?`, [valor, id])
             return { sucess: true, data: edit }
         } catch(err) {
+            logger.error("Funcionários PutFuncionario: " + err)
             console.error("Funcionários PutFuncionario: ", err)
             return { sucess: false, error: "Erro ao atualizar as informações do Funcionário!" }
         }
@@ -87,6 +94,7 @@ export const funcionariosDB = {
             return { sucess: true }
         } catch(err) {
             await connection.rollback()
+            logger.error("Funcionários PutAll: " + err)
             console.error("Funcionários PutAll: ", err)
             return { sucess: false ,error: "Erro ao atualizar os Funcionarios!" }
         } finally {
@@ -102,6 +110,7 @@ export const funcionariosDB = {
             await db.execute('DELETE FROM Funcionarios WHERE id = ?', [id])
             return { sucess: true }
         } catch(err) {
+            logger.error("Funcionários DeleteFuncionario: " + err)
             console.error("Funcionários DeleteFuncionario: ", err)
             return { sucess: false, error: "Erro ao deletar o funcionário!" }
         }
@@ -112,6 +121,7 @@ export const funcionariosDB = {
             await db.execute('DELETE FROM Funcionarios')
             return { sucess: true }
         } catch(err) {
+            logger.error("Funcionários DeleteAll: " + err)
             console.error("Funcionários DeleteAll: ", err)
             return { sucess: false, error: "Erro ao deletar todos os funcionários!" }
         }
