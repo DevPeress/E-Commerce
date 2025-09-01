@@ -95,7 +95,7 @@ export const cargosDB = {
     async deleteById(id: number): Promise<{ sucess: boolean, error?: string }> {
         try {
             const dados = await cargosDB.getById(id)
-            if (!dados.sucess) return { sucess: false, error: dados.error }
+            if (!dados.sucess || !dados.data) return { sucess: false, error: dados.error }
 
             await db.execute('DELETE FROM Cargos WHERE id = ?', [id])
             logger.info("Deletou o cargo de nome: " + dados.data[0].cargo)
