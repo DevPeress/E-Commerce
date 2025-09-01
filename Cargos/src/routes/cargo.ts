@@ -1,103 +1,79 @@
 import type { Request, Response } from "express";
 import db from "../lib/mysql";
 import router from "../lib/router";
-import type { Cargos, Criar } from "../types/cargos";
+import type { Criar } from "../types/cargos";
+import { cargosDB } from "../database/databaseCargos";
 
 router.get("/", async (req: Request, res: Response) => {
-    try {
-        const [rows] = await db.query('SELECT * FROM Cargos')
-        return res.json(rows)
-    } catch(err) {
-        console.error("MicroServiço Cargos GET: ", err)
-        return res.status(500).json({ error: "Erro ao buscar lista de cargos!" })
-    }
+    const dados = await cargosDB.getAll()
+
+    if (!dados.sucess) {
+        return res.status(500).json({ error: dados.error })
+    } 
+
+    res.json(dados.data)
 })
 
 router.get("/:id", async (req: Request, res: Response) => {
     const id = parseInt(req.params.id)
     if (!id) return res.status(400).json({ error: "ID não definido!" })
 
-    try {
-        const [rows] = await db.query<Cargos[]>('SELECT * FROM Cargos WHERE id = ?', [id])
-        return res.json(rows)
-    } catch(err) {
-        console.error("MicroServiço Cargos GET/:/ID: ", err)
-        return res.status(500).json({ error: "Erro ao buscar o cargo!" })
-    } 
+    const dados = await cargosDB.getById(id)
+    if (!dados.sucess) {
+        return res.status(500).json({ error: dados.error })
+    }
+
+    res.json(dados.data)
 })
 
 router.post("/", async (req: Request, res: Response) => {
     const { cargo, perms } = req.body as { cargo: string, perms: string[] }
-
     if (!cargo) return res.status(400).json({ error: "Cargo não definido!" })
 
-    try {
-        const [rows] = await db.query<Cargos[]>('SELECT id FROM Cargos WHERE cargo = ?', [cargo])
-        if (rows.length !== 0) return res.status(409).json({ error: "Cargo já está cadastrado na Empresa!" })
-    
-        await db.execute('INSERT INTO Cargos(cargo,perms) VALUES(?,?)', [cargo, perms])
-        return res.status(201).json({ success: true, message: "Cargo criado com sucesso!" })
-     } catch(err) {
-        console.error("MicroServiço Cargos POST: ", err)
-        return res.status(500).json({ error: "Erro ao criar o cargo!" })
-    } 
+    const dados = await cargosDB.getByCargo(cargo)
+    if (!dados.sucess) return res.status(409).json({ error: dados.error });
+
+    await db.execute('INSERT INTO Cargos(cargo,perms) VALUES(?,?)', [cargo, perms])
+    return res.status(201).json({ success: true, message: "Cargo criado com sucesso!" })
 })
 
 router.put("/", async (req: Request, res: Response) => {
     const { id, perms } = req.body as { id: number, perms: string[] }
     if (!id) return res.status(400).json({ error: "ID não definido!" })
-    
-    try {
-        const [rows] = await db.query<Cargos[]>('SELECT id FROM Cargos WHERE id = ?', [id])
-        if (rows.length === 0) return res.status(404).json({ error: "Cargo inexistente na Empresa!" })
 
-        const [infos] = await db.execute('UPDATE Cargos SET perms = ? WHERE id = ?', [JSON.stringify(perms), id])
-        return res.json(infos)
-    } catch(err) {
-        console.error("MicroServiço Cargos PUT: ", err)
-        return res.status(500).json({ error: "Erro ao atualizar o cargo!" })
-    }
+    const dados = await cargosDB.getById(id)
+    if (!dados.sucess) return res.status(404).json({ error: dados.error });
+    
+    const [infos] = await db.execute('UPDATE Cargos SET perms = ? WHERE id = ?', [JSON.stringify(perms), id])
+    return res.json(infos)
 })
 
 router.put("/all", async (req: Request, res: Response) => {
     const { ajustes } = req.body as { ajustes: Criar[] }
     if (!ajustes || !Array.isArray(ajustes)) return res.status(400).json({ error: "Ajuste inviados de forma inválida!" })
 
-    const connection = await db.getConnection()
-    try {
-        await connection.beginTransaction()
+    const dados = await cargosDB.putCargos(ajustes)
+    if (!dados.sucess) return res.status(400).json({ error: dados.error })
 
-        await Promise.all(ajustes.map((infos) => connection.execute("UPDATE Cargos SET perms = ? WHERE id = ?",[infos.id, JSON.stringify(infos.perms)])))
-
-        await connection.commit()
-        return res.json({ success: true, message: "Cargos atualizados com sucesso!" })
-    } catch(err) {
-        await connection.rollback()
-        console.error("MicroServiço Cargos PUT/ALL: ", err)
-        return res.status(500).json({ error: "Erro ao atualizar os cargos!" })
-    } finally {
-        connection.release()
-    }
+    res.status(200).json({ message: "Cargos atualizados!" })
 })
 
 router.delete("/", async (req: Request, res: Response) => {
     const { id } = req.body as { id: number }
     if (!id) return res.status(400).json({ error: "ID não definido!" })
 
-    try {
-        const [rows] = await db.query<Cargos[]>('SELECT id FROM Cargos WHERE id = ?', [id])
-        if (rows.length === 0) return res.status(404).json({ error: "Cargo inexistente na empresa!" })
-            
-        await db.execute('DELETE FROM Cargos WHERE id = ?', [id])
-        return res.status(200).json({ success: true, message: "Cargo deletado!" })
-    } catch(err) {
-        console.error("MicroServiço Cargos DELETE: ", err)
-        return res.status(500).json({ error: "Erro ao deletar o cargo!" })
-    }
+    const dados = await cargosDB.getById(id)
+    if (!dados.sucess) return res.status(404).json({ error: "Cargo não encontrado" });
+
+    const del = await cargosDB.deleteById(id)
+    if (!del.sucess) return res.status(404).json({ error: del.error })
+
+    return res.status(200).json({ success: true, message: "Cargo deletado!" })
 })
 
 router.delete("/all", async (req: Request, res: Response) => {
-    await db.query('DELETE FROM Cargos')
+    const dados = await cargosDB.deleteAll()
+    if (!dados.sucess) return res.status(404).json({ error: dados.error })
     return res.status(200).json({ success: true, message: "Cargos deletados!" })
 })
 
