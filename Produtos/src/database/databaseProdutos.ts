@@ -1,4 +1,5 @@
 import db from "../lib/mysql";
+import logger from "../lib/pino";
 import { InsertInput } from "../schemas/insertSchemas";
 import { UpdateInput } from "../schemas/updateSchemas";
 import { Produtos } from "../types/produtos";
@@ -10,6 +11,7 @@ export const produtosDB = {
             if (rows.length === 0) return { sucess: false, error: "Não possui produtos na empresa!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Produtos GetAll: "+ err)
             console.error("Produtos GetAll: ", err)
             return { sucess: false, error: "Erro ao encontrar os produtos!" }
         }
@@ -21,6 +23,7 @@ export const produtosDB = {
             if (rows.length === 0) return { sucess: true, error: "Não foi localizado produto com esse ID!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Produtos GetById: "+ err)
             console.error("Produtos GetById: ", err)
             return { sucess: false, error: "Erro ao localizar produto pelo ID!" }
         }
@@ -32,6 +35,7 @@ export const produtosDB = {
             if (rows.length === 0) return { sucess: false, error: "Não foi localizado produto com esse nome!" }
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Produtos GetByName: "+ err)
             console.error("Produtos GetByName: ", err)
             return { sucess: false, error: "Erro ao localizar produto pelo nome!!" }
         }
@@ -42,6 +46,7 @@ export const produtosDB = {
             const [rows] = await db.execute<Produtos[]>('INSERT INTO Produtos(nome,quantidade,descricao) VALUES(?,?,?)', [data.nome, data.quantidade, data.descricao])
             return { sucess: true, data: rows }
         } catch(err) {
+            logger.error("Produtos PostProduto: "+ err)
             console.error("Produtos PostProduto: ", err)
             return { sucess: false, error: "Erro ao criar o produto!" }
         }
@@ -55,6 +60,7 @@ export const produtosDB = {
             await db.execute(`UPDATE Produtos SET ${data.tipo} = ? WHERE id = ?`, [data.valor, data.id])
             return { sucess: true }
         } catch(err) {
+            logger.error("Produtos PutProduto: "+ err)
             console.error("Produtos PutProduto: ", err)
             return { sucess: false, error: "Erro ao criar o produto!" }
         }
@@ -71,6 +77,7 @@ export const produtosDB = {
             return { sucess: true }
         } catch(err) {
             await connection.rollback()
+            logger.error("Produtos PutAll: "+ err)
             console.error("Produtos PutAll: ", err)
             return { sucess: false, error: "Erro ao atualizar todos os produtos!!" }
         }finally {
@@ -83,7 +90,8 @@ export const produtosDB = {
             await db.execute('DELETE FROM Produtos WHERE id = ?', [id])
             return { sucess: true }
         } catch(err){
-            console.error("Produtos PutAll: ", err)
+            logger.error("Produtos DeleteById: "+ err)
+            console.error("Produtos DeleteById: ", err)
             return { sucess: false, error: "Erro ao deletar o produto!!" }
         }
     },
@@ -93,7 +101,8 @@ export const produtosDB = {
             await db.execute('DELETE FROM Produtos')
             return { sucess: true }
         } catch(err){
-            console.error("Produtos PutAll: ", err)
+            logger.error("Produtos DeleteAll: "+ err)
+            console.error("Produtos DeleteAll: ", err)
             return { sucess: false, error: "Erro ao deletar todos os produtos!!" }
         }
     }
