@@ -59,10 +59,11 @@ export const produtosDB = {
     async putProduto(data: UpdateInput): Promise<{ sucess: boolean, error?: string }> {
         try {
             const produto = await produtosDB.getById(data.id)
-            if (!produto.sucess) return { sucess: false, error: produto.error }
-            
+            if (!produto.sucess || !produto.data) return { sucess: false, error: produto.error }
+
             await db.execute(`UPDATE Produtos SET ${data.tipo} = ? WHERE id = ?`, [data.valor, data.id])
-            logger.info("Atualizou o produto de ID: " + data.id + " SET: " + data.tipo + " Valor:" + data.valor)
+            
+            logger.info("Atualizou o produto: " + produto.data[0].nome + " SET: " + data.tipo + " Valor:" + data.valor)
             return { sucess: true }
         } catch(err) {
             logger.error("Produtos PutProduto: "+ err)
@@ -93,8 +94,11 @@ export const produtosDB = {
 
     async deleteById(id: number): Promise<{ sucess: boolean, error?: string }> {
         try {
+            const produto = await produtosDB.getById(id)
+            if (!produto.sucess || !produto.data) return { sucess: false, error: produto.error }
+
             await db.execute('DELETE FROM Produtos WHERE id = ?', [id])
-            logger.info("Deletou o produto com ID: " + id)
+            logger.info("Deletou o produto com nome: " + produto.data[0].nome)
             return { sucess: true }
         } catch(err){
             logger.error("Produtos DeleteById: "+ err)
