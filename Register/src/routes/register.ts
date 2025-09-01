@@ -3,7 +3,7 @@ import router from "../lib/router";
 import { validate } from "../middlewares/validate";
 import { RegisterInput, registerSchema } from "../schemas/registeSchemas";
 import { RegisterDB } from "../database/databaseRegister";
-import { generateToken } from "../lib/jtw";
+import { generateToken } from "../lib/jwt";
 
 router.get("/:email", async (req: Request, res: Response) => {
     const email: string = req.params.email
