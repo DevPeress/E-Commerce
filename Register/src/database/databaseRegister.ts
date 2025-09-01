@@ -4,11 +4,11 @@ import { RegisterInput } from "../schemas/registeSchemas";
 import { Register } from "../types/register";
 
 export const RegisterDB = {
-    async getByEmail(email: string): Promise<{ sucess: boolean, error?: string}> {
+    async getByEmail(email: string): Promise<{ sucess: boolean, data?: Register[], error?: string}> {
         try {
             const [rows] = await db.query<Register[]>('SELECT email FROM Clientes WHERE email = ? LIMIT 1', [email])
             if (rows.length === 0) return { sucess: false, error: "Não foi localizado o email!" }
-            return { sucess: true }
+            return { sucess: true, data: rows }
         } catch(err) {
             console.error("Register GetByEmail: ", err)
             return { sucess: false, error: "Erro ao localizar email!"}

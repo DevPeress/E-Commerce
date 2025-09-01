@@ -3,6 +3,7 @@ import router from "../lib/router";
 import { validate } from "../middlewares/validate";
 import { RegisterInput, registerSchema } from "../schemas/registeSchemas";
 import { RegisterDB } from "../database/databaseRegister";
+import { generateToken } from "../lib/jtw";
 
 router.get("/:email", async (req: Request, res: Response) => {
     const email: string = req.params.email
@@ -20,6 +21,12 @@ router.post("/", validate(registerSchema), async (req: Request, res: Response) =
     const dados = await RegisterDB.postRegister(data)
     if (!dados.sucess) return res.status(404).json({ error: dados.error })
 
+    const infos = await RegisterDB.getByEmail(data.email)
+    if (!infos.sucess) return res.status(404).json({ error: infos.error })
+
+    if (!infos.data) return res.status(404).json({ error: "Erro ao criar conta!" })
+
+    const token = generateToken({ id: infos.data[0].id, email: data.email })
     return res.status(200).json({ message: "Conta criada com sucesso! "})
 })
 
