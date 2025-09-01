@@ -14,6 +14,7 @@ Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco n
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Zod](https://zod.dev)
 - [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)
+- [Pino](https://www.npmjs.com/package/pino)
 
 ## ✨ Funcionalidades
 
