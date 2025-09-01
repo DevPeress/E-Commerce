@@ -34,6 +34,32 @@ export const cargosDB = {
         }
     },
 
+    async postCargo(infos: { cargo: string, perms: string[]}): Promise<{ sucess: boolean, error?: string }> {
+        try {
+            const dados = await cargosDB.getByCargo(infos.cargo)
+            if (!dados.sucess) return { sucess: false, error: dados.error }
+
+            await db.execute('INSERT INTO Cargos(cargo,perms) VALUES(?,?)', [infos.cargo, infos.perms])
+            return { sucess: true }
+        } catch(err) {
+            console.error("Cargos PostCargo: ", err)
+            return { sucess: false, error: "Erro ao criar o cargo!!" }
+        }
+    },
+
+    async putCargo(infos: { id: number, perms: string[]}): Promise<{ sucess: boolean, data?: Cargos[], error?: string }> {
+        try {
+            const dados = await cargosDB.getById(infos.id)
+            if (!dados.sucess) return { sucess: false, error: dados.error };
+
+            const [rows] = await db.execute<Cargos[]>('UPDATE Cargos SET perms = ? WHERE id = ?', [JSON.stringify(infos.perms), infos.id])
+            return { sucess: true, data: rows }
+        } catch(err) {
+            console.error("Cargos PutCargo: ", err)
+            return { sucess: false, error: "Erro ao atualizar o cargo!!" }
+        }
+    },
+
     async putCargos(ajustes: Criar[]): Promise<{ sucess: boolean, error?: string }> {
         const connection = await db.getConnection()
 
