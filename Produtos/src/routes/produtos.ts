@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 import router from '../lib/router'
-import db from '../lib/mysql';
 import type { Produtos } from '../types/produtos';
 import { validate } from "../middlewares/validate";
 import { InsertInput, insertSchema } from "../schemas/insertSchemas";

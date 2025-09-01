@@ -1,11 +1,9 @@
 import type { Request, Response } from "express";
-import db from "../lib/mysql";
 import router from "../lib/router";
 import type { Usuarios } from "../types/funcionarios";
 import { validate } from "../middlewares/validate";
 import { FuncionarioInput, funcionarioSchema } from "../schemas/funcionarioSchemas";
 import { funcionariosDB } from "../database/databaseFuncionarios";
-import { error } from "console";
 
 router.get("/", async (req: Request, res: Response) => {
   const dados = await funcionariosDB.getAll()
@@ -26,19 +24,10 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.post("/", validate(funcionarioSchema), async (req: Request, res: Response) => {
   const data = req.body as FuncionarioInput
 
-  try {
-    const dados = await funcionariosDB.getByEmail(data.email)
-    if (dados) return res.status(409).json({ error: "Email já possui cadastro na empresa!" })
-
-    const dados2 = await funcionariosDB.getByCpf(data.cpf)
-    if (dados2) return res.status(409).json({ error: "CPF já possui cadastro na empresa!" })
-
-    await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [data.nome, data.email, data.cpf, data.idade, data.cep, data.cargo_id])
-    return res.status(201).json({ success: true, message: "Usuário criado com sucesso!" })
-  } catch(err) {
-    console.error("MicroServiço Funcionários POST: ", err)
-    return res.status(500).json({ error: "Erro ao criar Funcionário novo!" })
-  }
+  const dados = await funcionariosDB.postFuncionario(data)
+  if (!dados.sucess) return res.status(404).json({ error: dados.error })
+  
+  return res.status(200).json({ message: "Usuário criado com sucesso!" })
 })
 
 router.put("/", async (req: Request, res: Response) => {

@@ -1,4 +1,6 @@
+import { success } from "zod";
 import db from "../lib/mysql";
+import { FuncionarioInput } from "../schemas/funcionarioSchemas";
 import { Usuarios } from "../types/funcionarios";
 
 export const funcionariosDB = {
@@ -42,6 +44,22 @@ export const funcionariosDB = {
         } catch(err) {
             console.error("Funcionários GetByCpf: ", err)
             return { sucess: false, error: "Erro ao localizar funcionário!" }
+        }
+    },
+
+    async postFuncionario(data: FuncionarioInput): Promise<{ sucess: boolean, error?: string }> {
+        try {
+            const dados = await funcionariosDB.getByEmail(data.email)
+            if (dados) return { sucess: false, error: "Email já possui cadastro na empresa!" }
+
+            const dados2 = await funcionariosDB.getByCpf(data.cpf)
+            if (dados2) return { sucess: false, error: "CPF já possui cadastro na empresa!" }
+
+            await db.execute('INSERT INTO Funcionarios(nome,email,cpf,idade,cep,cargo) VALUES(?,?,?,?,?,?)', [data.nome, data.email, data.cpf, data.idade, data.cep, data.cargo_id])
+            return { sucess: true }
+        } catch(err) {
+            console.error("Funcionários PostFuncionario: ", err)
+            return { sucess: false, error: "Erro ao criar o funcionário!" }
         }
     },
 
