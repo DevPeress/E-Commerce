@@ -59,10 +59,10 @@ export const cargosDB = {
     async putCargo(infos: { id: number, perms: string[]}): Promise<{ sucess: boolean, data?: Cargos[], error?: string }> {
         try {
             const dados = await cargosDB.getById(infos.id)
-            if (!dados.sucess) return { sucess: false, error: dados.error };
+            if (!dados.sucess || !dados.data) return { sucess: false, error: dados.error };
 
             const [rows] = await db.execute<Cargos[]>('UPDATE Cargos SET perms = ? WHERE id = ?', [JSON.stringify(infos.perms), infos.id])
-            logger.info("Atualizou o cargo: " + infos.id + " Perms: " + infos.perms)
+            logger.info("Atualizou o cargo: " + dados.data[0].cargo + " Perms: " + infos.perms)
             return { sucess: true, data: rows }
         } catch(err) {
             logger.error("Cargos PutCargo: " + err)
@@ -94,8 +94,11 @@ export const cargosDB = {
 
     async deleteById(id: number): Promise<{ sucess: boolean, error?: string }> {
         try {
+            const dados = await cargosDB.getById(id)
+            if (!dados.sucess) return { sucess: false, error: dados.error }
+
             await db.execute('DELETE FROM Cargos WHERE id = ?', [id])
-            logger.info("Deletou o cargo de ID: " + id)
+            logger.info("Deletou o cargo de nome: " + dados.data[0].cargo)
             return { sucess: true }
         } catch(err) {
             logger.error("Cargos DeleteById: " + err)
