@@ -22,6 +22,7 @@
   "homepage": "https://github.com/DevPeress/Back-End-Site#readme",
   "dependencies": {
     "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
     "mysql2": "^3.14.3"
   },
   "devDependencies": {
