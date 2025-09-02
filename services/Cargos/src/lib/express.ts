@@ -9,6 +9,7 @@ const options: cors.CorsOptions = {
   origin: 'http://localhost:' + PORT
 }
 
+app.use(cors(options))
 app.use(express.json());
 
 const limiter = rateLimit({
