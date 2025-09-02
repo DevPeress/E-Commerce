@@ -1,6 +1,35 @@
 CREATE DATABASE IF NOT EXISTS `Empresa`;
 USE `Empresa`;
 
+CREATE TABLE IF NOT EXISTS `Clientes` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `cpf` VARCHAR(14) NOT NULL,
+    `idade` INT NOT NULL,
+    `cep` VARCHAR(9) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_cpf` (`cpf`),
+    UNIQUE KEY `unique_email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `Cargos` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `cargo` VARCHAR(255) NOT NULL,
+    `perms` LONGTEXT DEFAULT '{}',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_cargo` (`cargo`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `Produtos` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(255) NOT NULL,
+    `quantidade` INT DEFAULT 0,
+    `descricao` LONGTEXT DEFAULT '',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_nome` (`nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `Funcionarios` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `nome` VARCHAR(255) NOT NULL,
@@ -12,34 +41,8 @@ CREATE TABLE IF NOT EXISTS `Funcionarios` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_cpf` (`cpf`),
     UNIQUE KEY `unique_email` (`email`),
-    CONSTRAINT `fk_funcionario_cargo` FOREIGN KEY (`cargo_id`) REFERENCES `Cargos`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT `fk_funcionario_cargo` 
+        FOREIGN KEY (`cargo_id`) REFERENCES `Cargos`(`id`) 
+        ON UPDATE CASCADE 
+        ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE IF NOT EXISTS `Clientes` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `cpf` VARCHAR(14) NOT NULL,
-    `idade` INT NOT NULL,
-    `cep` VARCHAR(9) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_cpf` (`cpf`),
-    UNIQUE KEY `unique_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
-
-CREATE TABLE IF NOT EXISTS `Cargos` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `cargo` VARCHAR(255) NOT NULL,
-    `perms` LONGTEXT DEFAULT '{}',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_cargo` (`cargo`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
-
-CREATE TABLE IF NOT EXISTS `Produtos` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `nome` VARCHAR(255) NOT NULL,
-    `quantidade` INT DEFAULT 0,
-    `descricao` LONGTEXT DEFAULT '',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_nome` (`nome`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4
