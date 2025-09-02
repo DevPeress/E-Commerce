@@ -30,7 +30,7 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 - Cadastro e gerenciamento de produtos
 - Sistema de registro e login
 - Limitação de acesso aos endpoints
-- Verificação de Dados recebidos nos endpoints via ZOD
+- Validação de dados recebidos nos endpoints via Zod
 - Autenticação via JWT
 
 ## ⚙️ Instalação
@@ -64,7 +64,7 @@ npm run dev
        ┣ 📂 middlewares # Verificações de acesso
        ┣ 📂 logs        # Registro de informações
        ┣ 📂 routes      # Endpoints
-       ┣ 📂 schemas     # Schemas do zod
+       ┣ 📂 schemas     # Schemas do Zod
        ┣ 📂 types       # Tipagens
        ┣ 📄 index.ts    # Inicializa rotas e porta
 ```
