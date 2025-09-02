@@ -1,11 +1,11 @@
-import { RowDataPacket } from "mysql2"
+import { RowDataPacket } from "mysql2";
 
 export interface Usuarios extends RowDataPacket {
-    id: number
-    nome: string
-    email: string
-    cpf: string
-    idade: number
-    cep: string
-    cargo: number
+  id: number;
+  nome: string;
+  email: string;
+  cpf: string;
+  idade: number;
+  cep: string;
+  cargo: number;
 }

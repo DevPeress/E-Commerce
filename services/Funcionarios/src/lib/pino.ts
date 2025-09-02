@@ -15,10 +15,10 @@ if (isProduction) {
 const logger = isProduction
   ? pino(destination)
   : pino({
-  transport: {
-    target: "pino-pretty",
-    options: { colorize: true },
-  },
-}); 
+      transport: {
+        target: "pino-pretty",
+        options: { colorize: true },
+      },
+    });
 
 export default logger;

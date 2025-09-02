@@ -9,4 +9,4 @@ export const funcionarioSchema = z.object({
   cargo_id: z.number().int().positive("Cargo inválido"),
 });
 
-export type FuncionarioInput = z.infer<typeof funcionarioSchema>; 
+export type FuncionarioInput = z.infer<typeof funcionarioSchema>;
