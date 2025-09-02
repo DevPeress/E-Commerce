@@ -19,6 +19,7 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)
 - [Cors](https://www.npmjs.com/package/cors)
+- [Helmet](https://www.npmjs.com/package/helmet)
 
 ### Validação e Logs:
 - [Zod](https://zod.dev)
