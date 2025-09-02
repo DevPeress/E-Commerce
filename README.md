@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco na criação de APIs RESTful para gerenciamento de funcionários, produtos e vendas.
+Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo APIs RESTful para gerenciamento de funcionários, produtos e vendas, com foco em segurança, validação de dados e autenticação via JWT.
 
 ## 🧰 Tecnologias Utilizadas
 
