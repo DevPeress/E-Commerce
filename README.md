@@ -115,6 +115,6 @@ npm run dev
 # Register
 
 ```
-- GET    /register – Verifica se o email possui cadastro
-- POST   /register – Cria uma conta com o email
+- GET    /register – Verifica se o e-mail possui cadastro
+- POST   /register – Cria uma conta com o e-mail
 ```
