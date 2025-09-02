@@ -18,6 +18,7 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 - [JWT](https://www.jwt.io)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)
+- [Cors](https://www.npmjs.com/package/cors)
 
 ### Validação e Logs:
 - [Zod](https://zod.dev)
