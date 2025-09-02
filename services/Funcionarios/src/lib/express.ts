@@ -6,7 +6,9 @@ import { PORT } from "./config";
 const app = express();
 
 const options: cors.CorsOptions = {
-  origin: 'http://localhost:' + PORT
+  origin: 'http://localhost:3000',
+  methods: ['GET','POST','PUT','DELETE'],
+  credentials: true
 }
 
 app.use(cors(options))
