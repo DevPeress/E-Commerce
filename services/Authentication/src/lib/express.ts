@@ -6,7 +6,7 @@ import { PORT } from "./config";
 const app = express();
 
 const options: cors.CorsOptions = {
-  origin: 'http://localhost:'+PORT
+  origin: 'http://localhost:'+ PORT
 };
 
 app.use(cors(options));
