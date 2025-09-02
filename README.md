@@ -41,7 +41,7 @@ NODE_ENV= Variavel
 JWT_ENV= Variavel
 PORT= Variavel
 
-# Inicie o servidor de desenvolvimento
+# Inicie o servidor de desenvolvimento em cada serviço
 npm run dev
 ```
 
@@ -49,12 +49,16 @@ npm run dev
 
 ```
 📁 Empresa
- ┣ 📂 Rotas   # Micro Serviços
+ ┣ 📂 Rotas   # Microsserviços
     ┣ 📂 src 
+       ┣ 📂 database    # Funções relacionadas ao banco de dados
        ┣ 📂 lib         # Funções auxiliares
-       ┣ 📂 routes      # EndPoints do Micro Serviço
-       ┣ 📂 types       # Tipagem do Micro Serviço
-       ┣ 📄 index.ts    # Rotear para os EndPoints e abertura da Porta
+       ┣ 📂 middlewares # Verificações de acesso
+       ┣ 📂 logs        # Registro de informações sobre o serviço
+       ┣ 📂 routes      # Endpoints do microsserviço
+       ┣ 📂 schemas     # Schemas do Zod para validação de dados
+       ┣ 📂 types       # Tipagens do microsserviço
+       ┣ 📄 index.ts    # Rotear para os endpoints e inicialização da Porta
 ```
 
 ## 🔐 Endpoints Disponíveis
