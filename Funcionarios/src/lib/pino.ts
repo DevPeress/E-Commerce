@@ -1,28 +1,25 @@
 import pino from "pino";
 import fs from "fs";
 import path from "path";
-import dotenv from "dotenv";
+import { NODE_ENV } from "./config";
 
-dotenv.config();
+const isProduction = NODE_ENV === "production";
 
-const logDir = path.join(__dirname, "..", "logs");
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir, { recursive: true });
+let destination;
+if (isProduction) {
+  const logDir = path.resolve(process.cwd(), "logs");
+  if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
+  destination = pino.destination(path.join(logDir, "app.log"));
 }
 
-const streams = [
-  process.stdout,                       
-  pino.destination(path.join(logDir, "app.log")) 
-];
-
-const logger = pino(
-  {
-    level: "info",
-    transport: process.env.NODE_ENV === "development"
-      ? { target: "pino-pretty", options: { colorize: true, translateTime: "HH:MM:ss" } }
-      : undefined,
+// Cria o logger
+const logger = isProduction
+  ? pino(destination)
+  : pino({
+  transport: {
+    target: "pino-pretty",
+    options: { colorize: true },
   },
-  pino.multistream(streams)
-);
+}); 
 
 export default logger;

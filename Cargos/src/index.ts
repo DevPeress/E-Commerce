@@ -1,3 +1,4 @@
+import { PORT } from "./lib/config";
 import app from "./lib/express";
 import logger from "./lib/pino";
 import routerCargos from "./lib/router";
@@ -5,6 +6,6 @@ import { authMiddleware } from "./middleware/auth";
 
 app.use('/cargos', authMiddleware, routerCargos)
 
-app.listen(3004, () => {
-  logger.info("🚀 Microserviço de Cargos rodando na porta 3004")
+app.listen(PORT, () => {
+  logger.info("🚀 Microserviço de Cargos rodando na porta: " + PORT)
 });
