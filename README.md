@@ -38,6 +38,7 @@ npm install
 # Crie os arquivos .env em cada serviço com
 NODE_ENV= Variavel
 JWT_ENV= Variavel
+PORT= Variavel
 
 # Inicie o servidor de desenvolvimento
 npm run dev
