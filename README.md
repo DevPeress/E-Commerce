@@ -74,10 +74,10 @@ npm run dev
 # Funcionários
 
 ```
-- GET /funcionarios – Lista todos os funcionários
-- GET /funcionarios/:id – Exibe detalhes de um funcionário
-- POST /funcionarios – Cria um novo funcionário
-- PUT /funcionarios – Atualiza as informações de um funcionário
+- GET    /funcionarios – Lista todos os funcionários
+- GET    /funcionarios/:id – Exibe detalhes de um funcionário
+- POST   /funcionarios – Cria um novo funcionário
+- PUT    /funcionarios – Atualiza as informações de um funcionário
 - DELETE /funcionarios – Remove um funcionário
 - DELETE /funcionarios/all – Remove todos os funcionários
 ```
@@ -85,11 +85,11 @@ npm run dev
 # Cargos
 
 ```
-- GET /cargos – Lista todos os cargos e permissões
-- GET /cargo/:id – Exibe detalhes de um cargo
-- POST /cargo – Cria um novo cargo
-- PUT /cargo – Atualiza as informações de um cargo
-- PUT /cargo/all – Atualiza todos os cargos
+- GET    /cargos – Lista todos os cargos e permissões
+- GET    /cargo/:id – Exibe detalhes de um cargo
+- POST   /cargo – Cria um novo cargo
+- PUT    /cargo – Atualiza as informações de um cargo
+- PUT    /cargo/all – Atualiza todos os cargos
 - DELETE /cargo – Remove um cargo
 - DELETE /cargo/all – Remove todos os cargos
 ```
@@ -97,11 +97,11 @@ npm run dev
 # Produtos
 
 ```
-- GET /produtos – Lista todos os produtos
-- GET /produtos/:id – Exibe detalhes de um produto
-- GET /produtos/:nome – Exibe detalhes de um produto
-- POST /produtos – Cria um novo produto
-- PUT /produtos – Atualiza as informações de um produto
+- GET    /produtos – Lista todos os produtos
+- GET    /produtos/:id – Exibe detalhes de um produto
+- GET    /produtos/:nome – Exibe detalhes de um produto
+- POST   /produtos – Cria um novo produto
+- PUT    /produtos – Atualiza as informações de um produto
 - DELETE /produtos – Remove um produto
 - DELETE /produtos/all – Remove todos os produto
 ```
@@ -115,6 +115,6 @@ npm run dev
 # Register
 
 ```
-- GET /register – Verifica se o email possui cadastro
-- POST /register – Cria uma conta com o email
+- GET    /register – Verifica se o email possui cadastro
+- POST   /register – Cria uma conta com o email
 ```
