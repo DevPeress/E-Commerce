@@ -1,7 +1,14 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
-const app = express();
+import cors from 'cors'
+import { PORT } from "./config";
 
+const app = express();
+const options: cors.CorsOptions = {
+  origin: 'http://localhost:' + PORT
+}
+
+app.use(cors(options))
 app.use(express.json());
 
 const limiter = rateLimit({
