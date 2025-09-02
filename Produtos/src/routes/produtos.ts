@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res: Response) => {
     return res.json(dados.data)
 })
 
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/id/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id)
     if (!id) return res.status(400).json({ error: "ID não informado do produto!" })
     
@@ -23,7 +23,7 @@ router.get("/:id", async (req: Request, res: Response) => {
     return res.status(200).json(dados.data)
 })
 
-router.get("/:nome", async (req: Request, res: Response) => {
+router.get("/nome/:nome", async (req: Request, res: Response) => {
     const nome: string = req.params.nome
     if (!nome) return res.status(400).json({ error: "Nome não informado do produto!" })
 
