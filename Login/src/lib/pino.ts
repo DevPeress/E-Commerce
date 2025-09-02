@@ -1,6 +1,9 @@
 import pino from "pino";
 import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const logDir = path.join(__dirname, "..", "logs");
 if (!fs.existsSync(logDir)) {
