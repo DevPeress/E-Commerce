@@ -54,11 +54,11 @@ npm run dev
        ┣ 📂 database    # Funções relacionadas ao banco de dados
        ┣ 📂 lib         # Funções auxiliares
        ┣ 📂 middlewares # Verificações de acesso
-       ┣ 📂 logs        # Registro de informações sobre o serviço
-       ┣ 📂 routes      # Endpoints do microsserviço
-       ┣ 📂 schemas     # Schemas do Zod para validação de dados
-       ┣ 📂 types       # Tipagens do microsserviço
-       ┣ 📄 index.ts    # Rotear para os endpoints e inicialização da Porta
+       ┣ 📂 logs        # Registro de informações
+       ┣ 📂 routes      # Endpoints
+       ┣ 📂 schemas     # Schemas do zod
+       ┣ 📂 types       # Tipagens
+       ┣ 📄 index.ts    # Inicializa rotas e porta
 ```
 
 ## 🔐 Endpoints Disponíveis
