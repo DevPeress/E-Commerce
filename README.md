@@ -98,8 +98,8 @@ npm run dev
 
 ```
 - GET    /produtos – Lista todos os produtos
-- GET    /produtos/:id – Exibe detalhes de um produto
-- GET    /produtos/:nome – Exibe detalhes de um produto
+- GET    /produtos/id/:id – Exibe detalhes de um produto
+- GET    /produtos/nome/:nome – Exibe detalhes de um produto
 - POST   /produtos – Cria um novo produto
 - PUT    /produtos – Atualiza as informações de um produto
 - DELETE /produtos – Remove um produto
