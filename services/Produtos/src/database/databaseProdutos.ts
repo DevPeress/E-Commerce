@@ -1,7 +1,6 @@
 import db from "../lib/mysql";
 import logger from "../lib/pino";
-import { InsertInput } from "../schemas/insertSchemas";
-import { UpdateInput } from "../schemas/updateSchemas";
+import { InsertInput, UpdateInput } from "../schemas/produtosSchemas";
 import { Produtos } from "../types/produtos";
 
 export const produtosDB = {

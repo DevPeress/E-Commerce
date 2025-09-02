@@ -2,8 +2,7 @@ import type { Request, Response } from "express";
 import router from "../lib/router";
 import type { Produtos } from "../types/produtos";
 import { validate } from "../middlewares/validate";
-import { InsertInput, insertSchema } from "../schemas/insertSchemas";
-import { UpdateInput, updateSchema } from "../schemas/updateSchemas";
+import { InsertInput, insertSchema, UpdateInput, updateSchema } from "../schemas/produtosSchemas";
 import { produtosDB } from "../database/databaseProdutos";
 
 router.get("/", async (req: Request, res: Response) => {
