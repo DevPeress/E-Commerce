@@ -6,14 +6,21 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 
 ## 🧰 Tecnologias Utilizadas
 
+# Back-end e Linguagens:
 - [Node.js](https://nodejs.org/pt)
 - [Express](https://expressjs.com)
 - [TypeScript](https://www.typescriptlang.org/)
+
+# Banco de Dados:
 - [MySQL](https://www.mysql.com/)
+
+# Autenticação e Segurança:
 - [JWT](https://www.jwt.io)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
-- [Zod](https://zod.dev)
 - [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)
+
+# Validação e Logs:
+- [Zod](https://zod.dev)
 - [Pino](https://www.npmjs.com/package/pino)
 
 ## ✨ Funcionalidades
