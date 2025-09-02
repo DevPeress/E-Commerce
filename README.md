@@ -24,6 +24,8 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 ### Validação e Logs:
 - [Zod](https://zod.dev)
 - [Pino](https://www.npmjs.com/package/pino)
+
+### Qualidade de Código:
 - [ESLint](https://eslint.org/?utm_source=chatgpt.com)
 - [Prettier](https://prettier.io/?utm_source=chatgpt.com)
 
