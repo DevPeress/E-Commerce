@@ -25,6 +25,7 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-rate-limit": "^8.0.1",
+    "helmet": "^8.1.0",
     "install": "^0.13.0",
     "jiti": "^2.5.1",
     "jsonwebtoken": "^9.0.2",
