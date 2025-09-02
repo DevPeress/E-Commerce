@@ -12,4 +12,4 @@ function getEnvVar(name: string): string {
 
 export const JWT_SECRET = getEnvVar("JWT_ENV");
 export const PORT = Number(getEnvVar("PORT"));
-export const NODE_ENV = getEnvVar("NODE_ENV")
+export const NODE_ENV = getEnvVar("NODE_ENV");
