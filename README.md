@@ -106,15 +106,10 @@ npm run dev
 - DELETE /produtos/all – Remove todos os produto
 ```
 
-# Login
+# Authentication
 
 ```
-- POST /login – Verificação de Login
-```
-
-# Register
-
-```
-- GET    /register – Verifica se o e-mail possui cadastro
-- POST   /register – Cria uma conta com o e-mail
+- GET    /auth/:email – Verifica se o e-mail possui cadastro
+- POST   /auth/register – Cria uma conta com o e-mail
+- POST   /auth/login – Verificação de Login
 ```
