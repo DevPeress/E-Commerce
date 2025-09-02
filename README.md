@@ -18,12 +18,12 @@ Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco n
 
 ## ✨ Funcionalidades
 
-- Cadastro e gerenciamento de Funcionários
-- Cadastro e gerenciamento de Cargos
-- Cadastro e gerenciamento de Produtos
-- Sistema de Registro e Login
-- Limitação de Acesso aos EndPoints
-- Verificação de Dados recebidos nos EndPoints via ZOD
+- Cadastro e gerenciamento de funcionários
+- Cadastro e gerenciamento de cargos
+- Cadastro e gerenciamento de produtos
+- Sistema de registro e login
+- Limitação de acesso aos endpoints
+- Verificação de Dados recebidos nos endpoints via ZOD
 - Autenticação via JWT
 
 ## ⚙️ Instalação
@@ -34,7 +34,7 @@ git clone https://github.com/DevPeress/Empresa.git
 cd Empresa
 
 # Entre em cada microsserviço e instale as dependências
-cd Rotas/NomeDoServico
+cd NomeDoServico
 npm install
 
 # Crie o arquivo .env em cada serviço com as variáveis:
