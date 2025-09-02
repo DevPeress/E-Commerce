@@ -4,6 +4,7 @@ import cors from 'cors'
 import { PORT } from "./config";
 
 const app = express();
+
 const options: cors.CorsOptions = {
   origin: 'http://localhost:' + PORT
 }
