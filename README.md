@@ -86,12 +86,12 @@ npm run dev
 
 ```
 - GET    /cargos – Lista todos os cargos e permissões
-- GET    /cargo/:id – Exibe detalhes de um cargo
-- POST   /cargo – Cria um novo cargo
-- PUT    /cargo – Atualiza as informações de um cargo
-- PUT    /cargo/all – Atualiza todos os cargos
-- DELETE /cargo – Remove um cargo
-- DELETE /cargo/all – Remove todos os cargos
+- GET    /cargos/:id – Exibe detalhes de um cargo
+- POST   /cargos – Cria um novo cargo
+- PUT    /cargos – Atualiza as informações de um cargo
+- PUT    /cargos/all – Atualiza todos os cargos
+- DELETE /cargos – Remove um cargo
+- DELETE /cargos/all – Remove todos os cargos
 ```
 
 # Produtos
