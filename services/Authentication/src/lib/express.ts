@@ -1,7 +1,6 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
 import cors from 'cors';
-import { PORT } from "./config";
 
 const app = express();
 
