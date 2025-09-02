@@ -12,7 +12,6 @@ if (isProduction) {
   destination = pino.destination(path.join(logDir, "app.log"));
 }
 
-// Cria o logger
 const logger = isProduction
   ? pino(destination)
   : pino({
