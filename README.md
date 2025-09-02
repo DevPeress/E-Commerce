@@ -33,15 +33,16 @@ Sistema back-end desenvolvido em TypeScript para gestão de uma loja, com foco n
 git clone https://github.com/DevPeress/Empresa.git
 cd Empresa
 
-# Instale as dependências dentro de cada micro serviço
+# Entre em cada microsserviço e instale as dependências
+cd Rotas/NomeDoServico
 npm install
 
-# Crie os arquivos .env em cada serviço com
-# NODE_ENV= Variavel
-# JWT_ENV= Variavel
-# PORT= Variavel
+# Crie o arquivo .env em cada serviço com as variáveis:
+# NODE_ENV=valor
+# JWT_ENV=valor
+# PORT=valor
 
-# Inicie o servidor de desenvolvimento em cada serviço
+# Inicie o servidor de desenvolvimento em cada microsserviço
 npm run dev
 ```
 
