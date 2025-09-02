@@ -6,4 +6,4 @@ export const insertSchema = z.object({
   descricao: z.string().min(3, "Descrição do produto deve ter no mínimo 3 caracteres!"),
 });
 
-export type InsertInput = z.infer<typeof insertSchema>; 
+export type InsertInput = z.infer<typeof insertSchema>;

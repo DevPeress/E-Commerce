@@ -6,4 +6,4 @@ export const updateSchema = z.object({
   valor: z.string("Não foi informado o valor para a troca!"),
 });
 
-export type UpdateInput = z.infer<typeof updateSchema>; 
+export type UpdateInput = z.infer<typeof updateSchema>;
