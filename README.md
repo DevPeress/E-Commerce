@@ -14,12 +14,12 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 ### Banco de Dados:
 - [MySQL](https://www.mysql.com/)
 
-# Autenticação e Segurança:
+### Autenticação e Segurança:
 - [JWT](https://www.jwt.io)
 - [Bcrypt](https://www.npmjs.com/package/bcrypt)
 - [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)
 
-# Validação e Logs:
+### Validação e Logs:
 - [Zod](https://zod.dev)
 - [Pino](https://www.npmjs.com/package/pino)
 
