@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
@@ -17,6 +18,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     (req as any).user = decoded; // injeta usuário no request
     next();
   } catch (error) {
+    console.error("Auth: " + error);
     return res.status(401).json({ message: "Token inválido ou expirado" });
   }
 }
