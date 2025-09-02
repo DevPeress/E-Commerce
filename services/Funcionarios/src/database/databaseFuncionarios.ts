@@ -1,4 +1,3 @@
-import { success } from "zod";
 import db from "../lib/mysql";
 import { FuncionarioInput } from "../schemas/funcionarioSchemas";
 import { Usuarios } from "../types/funcionarios";
