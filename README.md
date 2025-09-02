@@ -6,12 +6,12 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 
 ## 🧰 Tecnologias Utilizadas
 
-# Back-end e Linguagens:
+### Back-end e Linguagens:
 - [Node.js](https://nodejs.org/pt)
 - [Express](https://expressjs.com)
 - [TypeScript](https://www.typescriptlang.org/)
 
-# Banco de Dados:
+### Banco de Dados:
 - [MySQL](https://www.mysql.com/)
 
 # Autenticação e Segurança:
