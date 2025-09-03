@@ -2,8 +2,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import logger from "../lib/pino";
-
-const JWT_SECRET = "supersecret";
+import { JWT_SECRET } from "../lib/config";
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
