@@ -12,7 +12,7 @@ router.get("/:email", async (req: Request, res: Response) => {
   const dados = await AuthDB.getByEmail(email);
   if (dados.sucess) return res.status(404).json({ error: "Email já possui cadastro na empresa!" });
 
-  return res.status(200).json({ message: "Conta pode ser criada! " });
+  return res.status(200).json({ message: "Conta pode ser criada!" });
 });
 
 router.post("/register", validate(registerSchema), async (req: Request, res: Response) => {
