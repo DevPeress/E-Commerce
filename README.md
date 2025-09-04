@@ -31,13 +31,14 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 
 ## ✨ Funcionalidades
 
-- Cadastro e gerenciamento de funcionários
-- Cadastro e gerenciamento de cargos
-- Cadastro e gerenciamento de produtos
-- Sistema de registro e login
-- Limitação de acesso aos endpoints
-- Validação de dados recebidos nos endpoints via Zod
-- Autenticação via JWT
+- Gerenciamento de Funcionários: Cadastro, atualização e exclusão de funcionários.
+- Gerenciamento de Cargos: Criação e manutenção de cargos dentro do sistema.
+- Gerenciamento de Produtos: Cadastro, edição e remoção de produtos.
+- Sistema de Autenticação: Registro e login de usuários com segurança.
+- Controle de Acesso por Cargo: Verificação de permissões para endpoints sensíveis.
+- Restrição de Endpoints: Limitação de acesso baseada em funções e níveis de usuário.
+- Validação de Dados: Uso do Zod para garantir integridade e consistência das informações recebidas.
+- Autenticação Segura: Utilização de JWT para autenticação e proteção de rotas.
 
 ## ⚙️ Instalação
 
