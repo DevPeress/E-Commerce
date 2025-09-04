@@ -44,3 +44,13 @@ router.put("/", validate(cupomSchema), async (req: Request, res: Response) => {
 
   return res.status(200).json({ mensage: "Cupom atualizado!" });
 });
+
+router.delete("/", async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id);
+  if (!id) return res.status(400).json({ error: "ID não definido!" });
+
+  const dados = await CupomDB.deleteCupom(id);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.status(200).json({ mensage: "Cupom deletado!" });
+});

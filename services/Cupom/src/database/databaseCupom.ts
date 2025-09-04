@@ -75,4 +75,18 @@ export const CupomDB = {
       return { sucess: false, error: "Não foi possível atualizar o cupom!" };
     }
   },
+
+  async deleteCupom(id: number): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      const dados = await CupomDB.getById(id);
+      if (!dados.sucess) return { sucess: false, error: dados.error };
+
+      await db.execute("DELETE FROM Cupom WHERE id = ?", [id]);
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Cupom DeleteCupom: " + err);
+      console.error("Cupom DeleteCupom: ", err);
+      return { sucess: false, error: "Não foi possível deletar o cupom!" };
+    }
+  },
 };
