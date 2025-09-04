@@ -61,3 +61,5 @@ router.delete("/all", async (req: Request, res: Response) => {
 
   return res.status(200).json({ mensage: "Cupons deletado!" });
 });
+
+export default router;
