@@ -33,7 +33,11 @@ router.post("/register", validate(registerSchema), async (req: Request, res: Res
 
   if (!infos.data) return res.status(404).json({ error: "Erro ao criar conta!" });
 
-  const token = generateToken({ id: infos.data[0].id, email: data.email });
+  const token = generateToken({
+    id: infos.data[0].id,
+    email: data.email,
+    cargo: "Cliente",
+  });
   return res.json(token);
 });
 
@@ -44,7 +48,11 @@ router.post("/login", validate(loginSchema), async (req: Request, res: Response)
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
   if (!dados.data) return res.status(404).json({ error: "Erro ao realizar o login" });
 
-  const token = generateToken({ id: dados.data[0].id, email: dados.data[0].email });
+  const token = generateToken({
+    id: dados.data[0].id,
+    email: dados.data[0].email,
+    cargo: "Cliente",
+  });
 
   return res.json({ token });
 });
