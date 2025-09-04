@@ -1,7 +1,14 @@
 import type { Request, Response } from "express";
 import router from "../lib/router";
 import { validate } from "../middlewares/validate";
-import { LoginInput, loginSchema, RegisterInput, registerSchema } from "../schemas/authSchemas";
+import {
+  LoginInput,
+  loginSchema,
+  RecInput,
+  recSchema,
+  RegisterInput,
+  registerSchema,
+} from "../schemas/authSchemas";
 import { AuthDB } from "../database/databaseAuth";
 import { generateToken } from "../lib/jwt";
 
@@ -40,6 +47,15 @@ router.post("/login", validate(loginSchema), async (req: Request, res: Response)
   const token = generateToken({ id: dados.data[0].id, email: dados.data[0].email });
 
   return res.json({ token });
+});
+
+router.put("/", validate(recSchema), async (req: Request, res: Response) => {
+  const data = req.body as RecInput;
+
+  const dados = await AuthDB.getLogin(data);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  res.status(200).json({ message: "Senha atualiza com sucesso!" });
 });
 
 export default router;

@@ -2,7 +2,7 @@ import { email } from "zod";
 import { VerificarSenha, Criptografar } from "../lib/bcrypt";
 import db from "../lib/mysql";
 import logger from "../lib/pino";
-import { LoginInput, RegisterInput } from "../schemas/authSchemas";
+import { LoginInput, RecInput, RegisterInput } from "../schemas/authSchemas";
 import { Login, Register } from "../types/auth";
 
 export const AuthDB = {
@@ -68,6 +68,28 @@ export const AuthDB = {
       logger.error("Login GetLogin: " + err);
       console.error("Login GetLogin: ", err);
       return { sucess: false, error: "Erro ao realizar o login!" };
+    }
+  },
+
+  async putLogin(dados: RecInput): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      const data = await AuthDB.getByEmail(dados.email);
+      if (!data.sucess || !data.data) return { sucess: false, error: data.error };
+
+      const verify: boolean = await VerificarSenha(data.data[0].senha, dados.senha);
+      if (!verify) return { sucess: false, error: "Senha atual está errada!" };
+
+      const senhaCriptografada = Criptografar(dados.senhaNova);
+
+      await db.execute("UPDATE INTO Clientes SET senha = ? WHERE email = ?", [
+        senhaCriptografada,
+        dados.email,
+      ]);
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Recuperação: " + err);
+      console.error("Recuperação: ", err);
+      return { sucess: false, error: "Erro ao realizar a recuperação de senha!" };
     }
   },
 };
