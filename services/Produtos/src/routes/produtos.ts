@@ -4,6 +4,7 @@ import type { Produtos } from "../types/produtos";
 import { validate } from "../middlewares/validate";
 import { InsertInput, insertSchema, UpdateInput, updateSchema } from "../schemas/produtosSchemas";
 import { produtosDB } from "../database/databaseProdutos";
+import { authMiddleware } from "../middlewares/auth";
 
 router.get("/", async (req: Request, res: Response) => {
   const dados = await produtosDB.getAll();
@@ -61,7 +62,7 @@ router.put("/all", async (req: Request, res: Response) => {
   return res.status(200).json({ message: "Produtos foram atualizados com sucesso!" });
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
   if (!id) return res.status(400).json({ error: "ID não informado do produto!" });
 
@@ -71,7 +72,7 @@ router.delete("/", async (req: Request, res: Response) => {
   return res.status(200).json({ message: "Produtos foi deletado com sucesso!" });
 });
 
-router.delete("/all", async (req: Request, res: Response) => {
+router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const dados = await produtosDB.deleteAll();
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
 

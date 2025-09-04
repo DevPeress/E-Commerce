@@ -4,7 +4,7 @@ import logger from "./lib/pino";
 import { authMiddleware } from "./middlewares/auth";
 import produtosRouter from "./routes/produtos";
 
-app.use("/produtos", authMiddleware, produtosRouter);
+app.use("/produtos", authMiddleware(["Admin", "Funcionarios"]), produtosRouter);
 
 app.listen(PORT, () => {
   logger.info("🚀 Microserviço de Cargos rodando na porta: " + PORT);
