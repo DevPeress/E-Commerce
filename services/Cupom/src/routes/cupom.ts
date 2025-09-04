@@ -16,3 +16,12 @@ router.get("/id/:id", async (req: Request, res: Response) => {
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
   return res.json(dados.data);
 });
+
+router.get("/nome/:nome", async (req: Request, res: Response) => {
+  const nome: string = req.params.nome;
+  if (!nome) return res.status(400).json({ error: "Nome Não informado" });
+
+  const dados = await CupomDB.getByName(nome);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  return res.json(dados.data);
+});

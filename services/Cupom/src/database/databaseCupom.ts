@@ -25,4 +25,16 @@ export const CupomDB = {
       return { sucess: false, error: "Erro ao localizar o cupom!" };
     }
   },
+
+  async getByName(name: string): Promise<{ sucess: boolean; data?: []; error?: string }> {
+    try {
+      const [rows] = await db.query<[]>("SELECT * FROM Cupom WHERE id = ?", [name]);
+      if (rows.length === 0) return { sucess: false, error: "Não possui cupom esse Nome!" };
+      return { sucess: true, data: rows };
+    } catch (err) {
+      logger.error("Cupom GetByName: " + err);
+      console.error("Cupom GetByName: ", err);
+      return { sucess: false, error: "Erro ao localizar o cupom!" };
+    }
+  },
 };
