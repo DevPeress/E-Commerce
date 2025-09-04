@@ -89,4 +89,15 @@ export const CupomDB = {
       return { sucess: false, error: "Não foi possível deletar o cupom!" };
     }
   },
+
+  async deleteAll(): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      await db.query("DELETE FROM Cupom");
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Cupom DeleteAllCupom: " + err);
+      console.error("Cupom DeleteAllCupom: ", err);
+      return { sucess: false, error: "Não foi possível deletar todos os cupons!!" };
+    }
+  },
 };

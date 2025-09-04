@@ -54,3 +54,10 @@ router.delete("/", async (req: Request, res: Response) => {
 
   return res.status(200).json({ mensage: "Cupom deletado!" });
 });
+
+router.delete("/all", async (req: Request, res: Response) => {
+  const dados = await CupomDB.deleteAll();
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.status(200).json({ mensage: "Cupons deletado!" });
+});
