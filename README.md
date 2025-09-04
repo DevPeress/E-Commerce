@@ -119,3 +119,15 @@ npm run dev
 - POST   /auth/register – Cria uma conta com o e-mail
 - POST   /auth/login – Verificação de Login
 ```
+
+# Cupom
+
+```
+- GET    /cupom – Lista todos os cupom
+- GET    /cupom/id/:id – Exibe detalhes de um cupom
+- GET    /cupom/nome/:nome – Exibe detalhes de um cupom
+- POST   /cupom – Cria um novo cupom
+- PUT    /cupom – Atualiza as informações de um cupom
+- DELETE /cupom – Remove um cupom
+- DELETE /cupom/all – Remove todos os cupons
+```
