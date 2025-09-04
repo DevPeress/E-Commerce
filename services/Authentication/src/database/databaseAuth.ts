@@ -3,7 +3,7 @@ import { VerificarSenha, Criptografar } from "../lib/bcrypt";
 import db from "../lib/mysql";
 import logger from "../lib/pino";
 import { LoginInput, RecInput, RegisterInput } from "../schemas/authSchemas";
-import { Login, Register } from "../types/auth";
+import { Cargo, Cargo_Id, Login, Register } from "../types/auth";
 
 export const AuthDB = {
   async getByEmail(email: string): Promise<{ sucess: boolean; data?: Register[]; error?: string }> {
@@ -47,7 +47,9 @@ export const AuthDB = {
     }
   },
 
-  async getLogin(dados: LoginInput): Promise<{ sucess: boolean; data?: Login[]; error?: string }> {
+  async getLogin(
+    dados: LoginInput
+  ): Promise<{ sucess: boolean; data?: Login[]; error?: string; cargo?: string }> {
     try {
       const [rows] = await db.query<Login[]>(
         "SELECT email, senha FROM Clientes WHERE email = ? LIMIT 1",
@@ -63,7 +65,20 @@ export const AuthDB = {
       }
 
       logger.info("Iniciou o login!");
-      return { sucess: true, data: rows };
+
+      const [info] = await db.query<Cargo_Id[]>(
+        "SELECT cargo_id FROM Funcionarios WHERE email = ?",
+        [dados.email]
+      );
+
+      if (info.length === 0) return { sucess: true, data: rows, cargo: "Cliente" };
+      const [cargo] = await db.query<Cargo[]>("SELECT cargo FROM Cargos WHERE id = ?", [
+        info[0].cargo_id,
+      ]);
+
+      if (cargo.length === 0) return { sucess: true, data: rows, cargo: "Cliente" };
+
+      return { sucess: true, data: rows, cargo: cargo[0].cargo };
     } catch (err) {
       logger.error("Login GetLogin: " + err);
       console.error("Login GetLogin: ", err);

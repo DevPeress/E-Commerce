@@ -51,7 +51,7 @@ router.post("/login", validate(loginSchema), async (req: Request, res: Response)
   const token = generateToken({
     id: dados.data[0].id,
     email: dados.data[0].email,
-    cargo: "Cliente",
+    cargo: dados.cargo,
   });
 
   return res.json({ token });

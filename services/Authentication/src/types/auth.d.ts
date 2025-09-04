@@ -14,3 +14,11 @@ export interface Login extends RowDataPacket {
   email: string;
   senha: string;
 }
+
+export interface Cargo_Id extends RowDataPacket {
+  cargo_id: string;
+}
+
+export interface Cargo extends RowDataPacket {
+  cargo: string;
+}
