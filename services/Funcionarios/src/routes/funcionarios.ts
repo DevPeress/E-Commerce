@@ -4,6 +4,7 @@ import type { Usuarios } from "../types/funcionarios";
 import { validate } from "../middlewares/validate";
 import { FuncionarioInput, funcionarioSchema } from "../schemas/funcionarioSchemas";
 import { funcionariosDB } from "../database/databaseFuncionarios";
+import { authMiddleware } from "../middlewares/auth";
 
 router.get("/", async (req: Request, res: Response) => {
   const dados = await funcionariosDB.getAll();
@@ -21,14 +22,19 @@ router.get("/:id", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
-router.post("/", validate(funcionarioSchema), async (req: Request, res: Response) => {
-  const data = req.body as FuncionarioInput;
+router.post(
+  "/",
+  authMiddleware(["Admin"]),
+  validate(funcionarioSchema),
+  async (req: Request, res: Response) => {
+    const data = req.body as FuncionarioInput;
 
-  const dados = await funcionariosDB.postFuncionario(data);
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+    const dados = await funcionariosDB.postFuncionario(data);
+    if (!dados.sucess) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Usuário criado com sucesso!" });
-});
+    return res.status(200).json({ message: "Usuário criado com sucesso!" });
+  }
+);
 
 router.put("/", async (req: Request, res: Response) => {
   const { id, tipo, valor } = req.body as { id: number; tipo: string; valor: string };
@@ -49,7 +55,7 @@ router.put("/", async (req: Request, res: Response) => {
   return res.status(200).json(insert.data);
 });
 
-router.put("/all", async (req: Request, res: Response) => {
+router.put("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { ajustes } = req.body as { ajustes: Usuarios[] };
   if (!ajustes || !Array.isArray(ajustes))
     return res.status(400).json({ error: "Ajuste inviados de forma inválida!" });
@@ -59,14 +65,14 @@ router.put("/all", async (req: Request, res: Response) => {
   return res.status(200).json("Cargos atualizados com sucesso!");
 });
 
-router.delete("/all", async (req: Request, res: Response) => {
+router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const dados = await funcionariosDB.deleteAll();
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
 
   return res.status(200).json({ message: "Todos os funcionários foram deletados!" });
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
   if (!id) return res.status(400).json({ error: "ID não informado!" });
 
