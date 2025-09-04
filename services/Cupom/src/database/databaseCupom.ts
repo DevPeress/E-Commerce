@@ -57,4 +57,22 @@ export const CupomDB = {
       return { sucess: false, error: "Não foi possível criar o cupom!" };
     }
   },
+
+  async putCupom(data: CupomInput): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      const dados = await CupomDB.getByName(data.nome);
+      if (!dados.sucess) return { sucess: false, error: dados.error };
+
+      await db.execute("UPDATE Cupom SET nome = ?, valor = ? WHERE nome = ?", [
+        data.nome,
+        data.valor,
+        data.nome,
+      ]);
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Cupom PutCupom: " + err);
+      console.error("Cupom PutCupom: ", err);
+      return { sucess: false, error: "Não foi possível atualizar o cupom!" };
+    }
+  },
 };

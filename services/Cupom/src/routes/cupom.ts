@@ -35,3 +35,12 @@ router.post("/", validate(cupomSchema), async (req: Request, res: Response) => {
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
   return res.json(dados.data);
 });
+
+router.put("/", validate(cupomSchema), async (req: Request, res: Response) => {
+  const data = req.body as CupomInput;
+
+  const dados = await CupomDB.putCupom(data);
+  if (!dados.sucess) res.status(404).json({ error: dados.error });
+
+  return res.status(200).json({ mensage: "Cupom atualizado!" });
+});
