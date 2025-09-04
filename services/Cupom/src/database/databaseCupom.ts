@@ -1,5 +1,6 @@
 import db from "../lib/mysql";
 import logger from "../lib/pino";
+import { CupomInput } from "../schemas/cupomSchemas";
 import { Cupom } from "../types/cupom";
 
 export const CupomDB = {
@@ -36,6 +37,24 @@ export const CupomDB = {
       logger.error("Cupom GetByName: " + err);
       console.error("Cupom GetByName: ", err);
       return { sucess: false, error: "Erro ao localizar o cupom!" };
+    }
+  },
+
+  async postCupom(data: CupomInput): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      const dados = await CupomDB.getByName(data.nome);
+      if (dados.sucess) return { sucess: false, error: "Cupom com o mesmo nome criado já!" };
+
+      await db.execute("INSERT INTO Cupom(nome,valor,tipo) VALUES(?,?,?)", [
+        data.nome,
+        data.valor,
+        data.tipo,
+      ]);
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Cupom PostCupom: " + err);
+      console.error("Cupom PostCupom: ", err);
+      return { sucess: false, error: "Não foi possível criar o cupom!" };
     }
   },
 };
