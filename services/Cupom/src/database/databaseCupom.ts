@@ -1,10 +1,11 @@
 import db from "../lib/mysql";
 import logger from "../lib/pino";
+import { Cupom } from "../types/cupom";
 
 export const CupomDB = {
-  async getAll(): Promise<{ sucess: boolean; data?: []; error?: string }> {
+  async getAll(): Promise<{ sucess: boolean; data?: Cupom[]; error?: string }> {
     try {
-      const [rows] = await db.query<[]>("SELECT * FROM Cupom");
+      const [rows] = await db.query<Cupom[]>("SELECT * FROM Cupom");
       if (rows.length === 0) return { sucess: false, error: "Não possui cupons registrados!" };
       return { sucess: true, data: rows };
     } catch (err) {
@@ -14,9 +15,9 @@ export const CupomDB = {
     }
   },
 
-  async getById(id: number): Promise<{ sucess: boolean; data?: []; error?: string }> {
+  async getById(id: number): Promise<{ sucess: boolean; data?: Cupom[]; error?: string }> {
     try {
-      const [rows] = await db.query<[]>("SELECT * FROM Cupom WHERE id = ?", [id]);
+      const [rows] = await db.query<Cupom[]>("SELECT * FROM Cupom WHERE id = ?", [id]);
       if (rows.length === 0) return { sucess: false, error: "Não possui cupom esse ID!" };
       return { sucess: true, data: rows };
     } catch (err) {
@@ -26,9 +27,9 @@ export const CupomDB = {
     }
   },
 
-  async getByName(name: string): Promise<{ sucess: boolean; data?: []; error?: string }> {
+  async getByName(name: string): Promise<{ sucess: boolean; data?: Cupom[]; error?: string }> {
     try {
-      const [rows] = await db.query<[]>("SELECT * FROM Cupom WHERE id = ?", [name]);
+      const [rows] = await db.query<Cupom[]>("SELECT * FROM Cupom WHERE id = ?", [name]);
       if (rows.length === 0) return { sucess: false, error: "Não possui cupom esse Nome!" };
       return { sucess: true, data: rows };
     } catch (err) {
