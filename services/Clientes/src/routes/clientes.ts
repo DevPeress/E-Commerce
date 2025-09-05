@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import router from "../lib/router";
 import { clientesDB } from "../database/databaseClientes";
+import { authMiddleware } from "../middlewares/auth";
 
 router.get("/", async (req: Request, res: Response) => {
   const dados = await clientesDB.getAll();
@@ -49,7 +50,7 @@ router.get("/email/:email", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
   if (isNaN(id)) return res.status(400).json({ error: "Não foi informado o ID!" });
 
@@ -59,7 +60,7 @@ router.delete("/", async (req: Request, res: Response) => {
   return res.status(200).json({ message: "Usuário deletado!" });
 });
 
-router.delete("/all", async (req: Request, res: Response) => {
+router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const dados = await clientesDB.deleteAll();
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
 
