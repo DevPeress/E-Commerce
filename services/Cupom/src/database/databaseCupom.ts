@@ -33,7 +33,7 @@ export const CupomDB = {
   async getByName(name: string): Promise<{ sucess: boolean; data?: Cupom[]; error?: string }> {
     try {
       logger.info("Requisitou cupom de Nome: " + name);
-      const [rows] = await db.query<Cupom[]>("SELECT * FROM Cupom WHERE id = ?", [name]);
+      const [rows] = await db.query<Cupom[]>("SELECT * FROM Cupom WHERE nome = ?", [name]);
       if (rows.length === 0) return { sucess: false, error: "Não possui cupom esse Nome!" };
       return { sucess: true, data: rows };
     } catch (err) {
