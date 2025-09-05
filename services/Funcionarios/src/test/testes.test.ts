@@ -21,7 +21,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar o funcionario certo de ID 1", async () => {
     const result = await funcionariosDB.getById(1);
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
@@ -38,7 +38,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar o funcionario de Id 3 não existe", async () => {
     const result = await funcionariosDB.getById(3);
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: false,
       error: "Funcionário não existente!",
     });
@@ -46,7 +46,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar o funcionario certo pelo email", async () => {
     const result = await funcionariosDB.getByEmail("peres@gmail.com");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
@@ -63,7 +63,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que não existe funcionario com esse mail", async () => {
     const result = await funcionariosDB.getByEmail("peres3@gmail.com");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: false,
       error: "Email não possui cadastro na empresa!",
     });
@@ -71,7 +71,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar o funcionario certo pelo cpf", async () => {
     const result = await funcionariosDB.getByCpf("11111111111111");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
@@ -88,7 +88,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que não existe funcionario com esse cpf", async () => {
     const result = await funcionariosDB.getByCpf("11222111111111");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: false,
       error: "CPF não possui cadastro na empresa!",
     });
@@ -96,11 +96,11 @@ describe("Verificar Database", () => {
 
   it("Deve informar que deletou o funcionario", async () => {
     const result = await funcionariosDB.deleteFuncionario(1);
-    expect(result).toMatchObject({ sucess: true });
+    expect(result).toEqual({ sucess: true });
   });
 
   it("Deve informar que deletou todos", async () => {
     const result = await funcionariosDB.deleteAll();
-    expect(result).toMatchObject({ sucess: true });
+    expect(result).toEqual({ sucess: true });
   });
 });
