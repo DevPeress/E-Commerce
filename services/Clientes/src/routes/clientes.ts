@@ -21,7 +21,7 @@ router.get("/id/:id", async (req: Request, res: Response) => {
 
 router.get("/nome/:nome", async (req: Request, res: Response) => {
   const nome: string = req.params.nome;
-  if (!nome) return res.status(400).json({ error: "Não foi informado o ID!" });
+  if (!nome) return res.status(400).json({ error: "Não foi informado o Nome!" });
 
   const dados = await clientesDB.getByNome(nome);
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
