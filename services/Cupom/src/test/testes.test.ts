@@ -47,7 +47,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que o cupom existe", async () => {
     const result = await CupomDB.getByName("Teste");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
