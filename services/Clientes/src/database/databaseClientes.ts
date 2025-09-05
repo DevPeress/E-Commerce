@@ -28,4 +28,17 @@ export const clientesDB = {
       return { sucess: false, error: "Erro ao buscar o cliente pelo ID!" };
     }
   },
+
+  async getByNome(nome: string): Promise<{ sucess: boolean; data?: Clientes[]; error?: string }> {
+    try {
+      const [rows] = await db.query<Clientes[]>("SELECT * FROM Clientes WHERE nome = ?", [nome]);
+      if (rows.length === 0) return { sucess: false, error: "Não existe cliente com essa nome!!" };
+
+      return { sucess: true, data: rows };
+    } catch (err) {
+      logger.error("Clientes GetByNome: " + err);
+      console.error("Clientes GetByNome: ", err);
+      return { sucess: false, error: "Erro ao buscar o cliente pelo nome!" };
+    }
+  },
 };
