@@ -98,6 +98,24 @@ export const clientesDB = {
     }
   },
 
+  async putClienteSpecify(
+    tipo: string,
+    valor: string | number,
+    cpf: string
+  ): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      const dados = await clientesDB.getByCpf(cpf);
+      if (!dados.sucess) return { sucess: false, error: dados.error };
+
+      await db.execute(`UPDATE Cliente SET ${tipo} = ? WHERE cpf = ?`, [valor, cpf]);
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Clientes PutClient: " + err);
+      console.error("Clientes PutClient: ", err);
+      return { sucess: false, error: "Não foi possível atualizar o cliente!" };
+    }
+  },
+
   async putClienteAll(data: ClienteType): Promise<{ sucess: boolean; error?: string }> {
     try {
       const dados = await clientesDB.getByCpf(data.cpf);

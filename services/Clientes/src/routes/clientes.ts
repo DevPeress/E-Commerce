@@ -61,14 +61,38 @@ router.post("/", validate(clienteSchema), async (req: Request, res: Response) =>
   return res.status(201).json({ message: "Cliente cadastrado com sucesso!" });
 });
 
+router.put("/", async (req: Request, res: Response) => {
+  const { cpf, tipo, valor } = req.body as { cpf: string; tipo: string; valor: string | number };
+  if (!cpf || !valor)
+    return res.status(400).json({ error: "Não foi enviado todas as informações para atualizar" });
+
+  const validos: string[] = [
+    "nome",
+    "email",
+    "cpf",
+    "rua",
+    "numeroCasa",
+    "idade",
+    "telefone",
+    "cpf",
+  ];
+  if (!validos.includes(tipo))
+    return res.status(400).json({ error: "Tipo informado não é válido!" });
+
+  const dados = await clientesDB.putClienteSpecify(tipo, valor, cpf);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.status(200).json({ message: "Dados do cliente atualizados!" });
+});
+
 router.put("/all", validate(clienteSchema), async (req: Request, res: Response) => {
   const data = req.body as ClienteType;
 
   const dados = await clientesDB.putClienteAll(data);
-  if (!dados.sucess) return res.status(404).json({ error: dados.error })
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Cliente atualizado!" })
-})
+  return res.status(200).json({ message: "Dados do cliente atualizados!" });
+});
 
 router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
