@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `Clientes` (
     `rua` VARCHAR(255) NOT NULL,
     `numeroCasa` INT NOT NULL,
     `idade` INT NOT NULL,
-    `telefone` VARCHAR(26) NOT NULL,
+    `telefone` VARCHAR(15) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_cpf` (`cpf`),
     UNIQUE KEY `unique_email` (`email`)

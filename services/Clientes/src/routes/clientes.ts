@@ -2,6 +2,8 @@ import type { Request, Response } from "express";
 import router from "../lib/router";
 import { clientesDB } from "../database/databaseClientes";
 import { authMiddleware } from "../middlewares/auth";
+import { validate } from "../middlewares/validate";
+import { clienteSchema, ClienteType } from "../schemas/clientesSchemas";
 
 router.get("/", async (req: Request, res: Response) => {
   const dados = await clientesDB.getAll();
@@ -48,6 +50,15 @@ router.get("/email/:email", async (req: Request, res: Response) => {
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
 
   return res.json(dados.data);
+});
+
+router.post("/", validate(clienteSchema), async (req: Request, res: Response) => {
+  const data = req.body as ClienteType;
+
+  const dados = await clientesDB.postCliente(data);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.status(201).json({ message: "Cliente cadastrado com sucesso!" });
 });
 
 router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {

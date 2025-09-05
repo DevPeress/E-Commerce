@@ -1,5 +1,6 @@
 import db from "../lib/mysql";
 import logger from "../lib/pino";
+import { ClienteType } from "../schemas/clientesSchemas";
 import { Clientes } from "../types/clientes";
 
 export const clientesDB = {
@@ -65,6 +66,35 @@ export const clientesDB = {
       logger.error("Clientes GetByEmail: " + err);
       console.error("Clientes GetByEmail: ", err);
       return { sucess: false, error: "Erro ao buscar o cliente pelo email!" };
+    }
+  },
+
+  async postCliente(data: ClienteType): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      const dados = await clientesDB.getByCpf(data.cpf);
+      if (dados.sucess) return { sucess: false, error: "CPF já cadastrado no sistema!" };
+
+      const dados2 = await clientesDB.getByEmail(data.email);
+      if (dados2.sucess) return { sucess: false, error: "E-mail já cadastrado no sistema!" };
+
+      await db.execute(
+        "INSERT INTO Clientes(nome,email,cpf,cep,rua,numeroCasa,idade,telefone) VALUES(?,?,?,?,?,?,?,?)",
+        [
+          data.nome,
+          data.email,
+          data.cpf,
+          data.cep,
+          data.rua,
+          data.numeroCasa,
+          data.idade,
+          data.telefone,
+        ]
+      );
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Clientes Post: " + err);
+      console.error("Clientes Post: ", err);
+      return { sucess: false, error: "Não foi possível criar o cliente!" };
     }
   },
 
