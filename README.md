@@ -129,6 +129,21 @@ npm test
 - DELETE /produtos/all – Remove todos os produto
 ```
 
+# Clientes
+
+```
+- GET    /clientes – Lista todos os clientes
+- GET    /clientes/id/:id – Exibe detalhes de um cliente
+- GET    /clientes/nome/:nome – Exibe detalhes de um cliente
+- GET    /clientes/cpf/:cpf – Exibe detalhes de um cliente
+- GET    /clientes/email/:email – Exibe detalhes de um cliente
+- POST   /clientes – Cria um novo cliente
+- PUT    /clientes – Atualiza as informações de um cliente
+- PUT    /clientes/all – Atualiza todas as informações de um cliente
+- DELETE /clientes – Remove um cliente
+- DELETE /clientes/all – Remove todos os clientes
+```
+
 # Authentication
 
 ```
