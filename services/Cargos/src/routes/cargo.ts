@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:id", async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  if (!id) return res.status(400).json({ error: "ID não definido!" });
+  if (isNaN(id)) return res.status(400).json({ error: "ID não definido!" });
 
   const dados = await cargosDB.getById(id);
   if (!dados.sucess) return res.status(500).json({ error: dados.error });
@@ -33,7 +33,7 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.put("/", async (req: Request, res: Response) => {
   const { id, perms } = req.body as { id: number; perms: string[] };
-  if (!id) return res.status(400).json({ error: "ID não definido!" });
+  if (isNaN(id)) return res.status(400).json({ error: "ID não definido!" });
 
   const dados = await cargosDB.putCargo({ id: id, perms: perms });
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
@@ -54,7 +54,7 @@ router.put("/all", async (req: Request, res: Response) => {
 
 router.delete("/", async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
-  if (!id) return res.status(400).json({ error: "ID não definido!" });
+  if (isNaN(id)) return res.status(400).json({ error: "ID não definido!" });
 
   const dados = await cargosDB.getById(id);
   if (!dados.sucess) return res.status(404).json({ error: "Cargo não encontrado" });

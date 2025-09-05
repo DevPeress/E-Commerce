@@ -15,7 +15,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/id/:id", async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id);
-  if (!id) return res.status(400).json({ error: "ID não informado do produto!" });
+  if (isNaN(id)) return res.status(400).json({ error: "ID não informado do produto!" });
 
   const dados = await produtosDB.getById(id);
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
@@ -64,7 +64,7 @@ router.put("/all", async (req: Request, res: Response) => {
 
 router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
-  if (!id) return res.status(400).json({ error: "ID não informado do produto!" });
+  if (isNaN(id)) return res.status(400).json({ error: "ID não informado do produto!" });
 
   const dados = await produtosDB.deleteById(id);
   if (!dados.sucess) return res.status(404).json({ error: dados.error });
