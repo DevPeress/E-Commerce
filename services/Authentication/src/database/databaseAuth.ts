@@ -9,7 +9,7 @@ export const AuthDB = {
   async getByEmail(email: string): Promise<{ sucess: boolean; data?: Register[]; error?: string }> {
     try {
       const [rows] = await db.query<Register[]>(
-        "SELECT email FROM Clientes WHERE email = ? LIMIT 1",
+        "SELECT email FROM Contas WHERE email = ? LIMIT 1",
         [email]
       );
       logger.info("Iniciou a procura do registro do email: " + email);
@@ -29,7 +29,7 @@ export const AuthDB = {
       if (dados.sucess) return { sucess: false, error: "Email possui uma conta já!" };
 
       const senhaProtegida: string = await Criptografar(data.senha);
-      await db.execute("INSERT INTO Clientes(nome,email,senha,cpf,idade,cep) VALUES(?,?,?,?,?,?)", [
+      await db.execute("INSERT INTO Contas(nome,email,senha,cpf,idade,cep) VALUES(?,?,?,?,?,?)", [
         data.nome,
         data.email,
         senhaProtegida,
@@ -52,7 +52,7 @@ export const AuthDB = {
   ): Promise<{ sucess: boolean; data?: Login[]; error?: string; cargo?: string }> {
     try {
       const [rows] = await db.query<Login[]>(
-        "SELECT email, senha FROM Clientes WHERE email = ? LIMIT 1",
+        "SELECT email, senha FROM Contas WHERE email = ? LIMIT 1",
         [dados.email]
       );
       logger.info("Iniciou a procura do email: " + dados.email);
@@ -96,7 +96,7 @@ export const AuthDB = {
 
       const senhaCriptografada = Criptografar(dados.senhaNova);
 
-      await db.execute("UPDATE INTO Clientes SET senha = ? WHERE email = ?", [
+      await db.execute("UPDATE INTO Contas SET senha = ? WHERE email = ?", [
         senhaCriptografada,
         dados.email,
       ]);
