@@ -29,4 +29,14 @@ router.get("/nome/:nome", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
+router.get("/cpf/:cpf", async (req: Request, res: Response) => {
+  const cpf: string = req.params.cpf;
+  if (!cpf) return res.status(400).json({ error: "Não foi informado o CPF!" });
+
+  const dados = await clientesDB.getByCpf(cpf);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.json(dados.data);
+});
+
 export default router;

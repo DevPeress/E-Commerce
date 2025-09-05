@@ -41,4 +41,17 @@ export const clientesDB = {
       return { sucess: false, error: "Erro ao buscar o cliente pelo nome!" };
     }
   },
+
+  async getByCpf(cpf: string): Promise<{ sucess: boolean; data?: Clientes[]; error?: string }> {
+    try {
+      const [rows] = await db.query<Clientes[]>("SELECT * FROM Clientes WHERE cpf = ?", [cpf]);
+      if (rows.length === 0) return { sucess: false, error: "Não existe cliente com esse cpf!!" };
+
+      return { sucess: true, data: rows };
+    } catch (err) {
+      logger.error("Clientes GetByCpf: " + err);
+      console.error("Clientes GetByCpf: ", err);
+      return { sucess: false, error: "Erro ao buscar o cliente pelo cpf!" };
+    }
+  },
 };
