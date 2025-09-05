@@ -9,4 +9,14 @@ router.get("/", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
+router.get("/id/:id", async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id);
+  if (!id) return res.status(400).json({ error: "Não foi informado o ID!" });
+
+  const dados = await clientesDB.getById(id);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.json(dados.data);
+});
+
 export default router;
