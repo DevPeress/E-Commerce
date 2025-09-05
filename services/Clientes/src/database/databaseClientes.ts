@@ -54,4 +54,17 @@ export const clientesDB = {
       return { sucess: false, error: "Erro ao buscar o cliente pelo cpf!" };
     }
   },
+
+  async getByEmail(email: string): Promise<{ sucess: boolean; data?: Clientes[]; error?: string }> {
+    try {
+      const [rows] = await db.query<Clientes[]>("SELECT * FROM Clientes WHERE email = ?", [email]);
+      if (rows.length === 0) return { sucess: false, error: "Não existe cliente com esse email!!" };
+
+      return { sucess: true, data: rows };
+    } catch (err) {
+      logger.error("Clientes GetByEmail: " + err);
+      console.error("Clientes GetByEmail: ", err);
+      return { sucess: false, error: "Erro ao buscar o cliente pelo email!" };
+    }
+  },
 };

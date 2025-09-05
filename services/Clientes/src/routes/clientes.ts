@@ -39,4 +39,14 @@ router.get("/cpf/:cpf", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
+router.get("/email/:email", async (req: Request, res: Response) => {
+  const email: string = req.params.email;
+  if (!email) return res.status(400).json({ error: "Não foi informado o E-mail!" });
+
+  const dados = await clientesDB.getByEmail(email);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+
+  return res.json(dados.data);
+});
+
 export default router;
