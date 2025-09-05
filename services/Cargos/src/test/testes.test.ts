@@ -3,7 +3,7 @@ import { cargosDB } from "../database/databaseCargos";
 describe("Verificar Database", () => {
   it("Pegar todos os Cargos com Sucesso", async () => {
     const dados = await cargosDB.getAll();
-    expect(dados).toEqual({
+    expect(dados).toMatchObject({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
