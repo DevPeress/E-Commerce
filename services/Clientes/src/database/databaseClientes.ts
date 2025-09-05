@@ -33,7 +33,7 @@ export const clientesDB = {
   async getByNome(nome: string): Promise<{ sucess: boolean; data?: Clientes[]; error?: string }> {
     try {
       const [rows] = await db.query<Clientes[]>("SELECT * FROM Clientes WHERE nome = ?", [nome]);
-      if (rows.length === 0) return { sucess: false, error: "Não existe cliente com essa nome!!" };
+      if (rows.length === 0) return { sucess: false, error: "Não existe cliente com esse nome!!" };
 
       return { sucess: true, data: rows };
     } catch (err) {
