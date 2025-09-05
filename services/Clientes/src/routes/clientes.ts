@@ -61,6 +61,15 @@ router.post("/", validate(clienteSchema), async (req: Request, res: Response) =>
   return res.status(201).json({ message: "Cliente cadastrado com sucesso!" });
 });
 
+router.put("/all", validate(clienteSchema), async (req: Request, res: Response) => {
+  const data = req.body as ClienteType;
+
+  const dados = await clientesDB.putClienteAll(data);
+  if (!dados.sucess) return res.status(404).json({ error: dados.error })
+
+  return res.status(200).json({ message: "Cliente atualizado!" })
+})
+
 router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const { id } = req.body as { id: number };
   if (isNaN(id)) return res.status(400).json({ error: "Não foi informado o ID!" });
