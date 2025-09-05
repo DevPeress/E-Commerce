@@ -22,7 +22,7 @@ export const produtosDB = {
       const [rows] = await db.query<Produtos[]>("SELECT * FROM Produtos WHERE id = ?", [id]);
       logger.info("Iniciou a procura do produto com id: " + id);
       if (rows.length === 0)
-        return { sucess: true, error: "Não foi localizado produto com esse ID!" };
+        return { sucess: false, error: "Não foi localizado produto com esse ID!" };
       return { sucess: true, data: rows };
     } catch (err) {
       logger.error("Produtos GetById: " + err);
