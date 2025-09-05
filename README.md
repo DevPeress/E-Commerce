@@ -21,6 +21,9 @@ Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo AP
 - [Cors](https://www.npmjs.com/package/cors)
 - [Helmet](https://www.npmjs.com/package/helmet)
 
+### 🧪 Testes Automatizados
+- [Jest](https://jestjs.io)
+
 ### Validação e Logs:
 - [Zod](https://zod.dev)
 - [Pino](https://www.npmjs.com/package/pino)
