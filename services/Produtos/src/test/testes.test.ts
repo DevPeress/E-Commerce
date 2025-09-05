@@ -18,7 +18,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que existe o produto do ID", async () => {
     const result = await produtosDB.getById(1);
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
@@ -33,7 +33,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que não existe o produto do ID", async () => {
     const result = await produtosDB.getById(2);
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: false,
       error: "Não foi localizado produto com esse ID!",
     });
@@ -41,7 +41,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que existe o produto do Nome", async () => {
     const result = await produtosDB.getByName("Teste");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: true,
       data: expect.arrayContaining([
         expect.objectContaining({
@@ -56,7 +56,7 @@ describe("Verificar Database", () => {
 
   it("Deve informar que não existe o produto do ID", async () => {
     const result = await produtosDB.getByName("Teste2");
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       sucess: false,
       error: "Não foi localizado produto com esse nome!",
     });
