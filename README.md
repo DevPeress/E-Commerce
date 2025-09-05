@@ -63,6 +63,19 @@ npm install
 npm run dev
 ```
 
+## 🧪 Testes
+
+```bash
+# Navegue até o serviço desejado
+cd services/<nome-do-servico>
+
+# Instale as dependências
+npm install
+
+# Execute os testes
+npm test
+```
+
 ## 🗂 Estrutura do Projeto
 
 ```
