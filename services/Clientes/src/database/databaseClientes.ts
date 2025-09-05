@@ -67,4 +67,26 @@ export const clientesDB = {
       return { sucess: false, error: "Erro ao buscar o cliente pelo email!" };
     }
   },
+
+  async deleteCliente(id: number): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      await db.execute("DELETE FROM Clientes WHERE id = ?", [id]);
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Clientes Delete: " + err);
+      console.error("Clientes Delete: ", err);
+      return { sucess: false, error: "Não foi possível deletar o cliente!" };
+    }
+  },
+
+  async deleteAll(): Promise<{ sucess: boolean; error?: string }> {
+    try {
+      await db.execute("DELETE FROM Clientes");
+      return { sucess: true };
+    } catch (err) {
+      logger.error("Clientes DeleteAll: " + err);
+      console.error("Clientes DeleteAll: ", err);
+      return { sucess: false, error: "Não foi possível deletar todos os cliente!" };
+    }
+  },
 };
