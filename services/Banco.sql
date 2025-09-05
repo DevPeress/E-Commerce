@@ -55,3 +55,18 @@ CREATE TABLE IF NOT EXISTS `Cupom` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `unique_nome` (`nome`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `Clientes` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `cpf` VARCHAR(14) NOT NULL,
+    `cep` VARCHAR(9) NOT NULL,
+    `rua` VARCHAR(255) NOT NULL,
+    `numeroCasa` INT NOT NULL,
+    `idade` INT NOT NULL,
+    `telefone` VARCHAR(26) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `unique_cpf` (`cpf`),
+    UNIQUE KEY `unique_email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
