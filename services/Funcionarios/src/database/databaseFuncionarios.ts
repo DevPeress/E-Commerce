@@ -37,7 +37,7 @@ export const funcionariosDB = {
   async getByEmail(email: string): Promise<{ sucess: boolean; data?: Usuarios[]; error?: string }> {
     try {
       const [rows] = await db.query<Usuarios[]>(
-        "SELECT * FROM Funcionarios WHERE email = ? LIMIT 1",
+        "SELECT f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id WHERE f.email = ? LIMIT 1",
         [email]
       );
       logger.info("Procurou o funcionário com email: " + email);
@@ -54,7 +54,7 @@ export const funcionariosDB = {
   async getByCpf(cpf: string): Promise<{ sucess: boolean; data?: Usuarios[]; error?: string }> {
     try {
       const [rows] = await db.query<Usuarios[]>(
-        "SELECT * FROM Funcionarios WHERE cpf = ? LIMIT 1",
+        "SELECT f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id WHERE f.cpf = ? LIMIT 1",
         [cpf]
       );
       logger.info("Procurou o funcionário com o CPF: " + cpf);

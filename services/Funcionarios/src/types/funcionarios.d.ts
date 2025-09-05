@@ -7,7 +7,7 @@ export interface Usuarios extends RowDataPacket {
   cpf: string;
   idade: number;
   cep: string;
-  cargo: number;
+  cargo: number | string;
 }
 
 interface MyJwtPayload extends JwtPayload {
