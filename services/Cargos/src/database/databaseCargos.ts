@@ -33,7 +33,7 @@ export const cargosDB = {
       const [rows] = await db.query<Cargos[]>("SELECT * From Cargos WHERE cargo = ?", [cargo]);
       logger.info("Buscou o cargo: " + cargo);
       if (rows.length > 0) return { sucess: true, data: rows };
-      return { sucess: false, error: "Cargo já está cadastrado na empresa!" };
+      return { sucess: false, error: "Cargo inexistente na empresa!" };
     } catch (err) {
       logger.error("Cargos GetByCargo: " + err);
       console.error("Cargos GetByCargo: ", err);
