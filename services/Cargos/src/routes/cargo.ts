@@ -6,7 +6,7 @@ import { cargosDB } from "../database/databaseCargos";
 router.get("/", async (req: Request, res: Response) => {
   const dados = await cargosDB.getAll();
 
-  if (!dados.sucess) return res.status(500).json({ error: dados.error });
+  if (!dados.success) return res.status(500).json({ error: dados.error });
 
   return res.json(dados.data);
 });
@@ -16,7 +16,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   if (isNaN(id)) return res.status(400).json({ error: "ID não definido!" });
 
   const dados = await cargosDB.getById(id);
-  if (!dados.sucess) return res.status(500).json({ error: dados.error });
+  if (!dados.success) return res.status(500).json({ error: dados.error });
 
   return res.json(dados.data);
 });
@@ -26,9 +26,9 @@ router.post("/", async (req: Request, res: Response) => {
   if (!cargo) return res.status(400).json({ error: "Cargo não definido!" });
 
   const dados = await cargosDB.postCargo({ cargo: cargo, perms: perms });
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Cargo criado com sucesso!" });
+  return res.status(200).json({ message: "Cargo criado com successo!" });
 });
 
 router.put("/", async (req: Request, res: Response) => {
@@ -36,9 +36,9 @@ router.put("/", async (req: Request, res: Response) => {
   if (isNaN(id)) return res.status(400).json({ error: "ID não definido!" });
 
   const dados = await cargosDB.putCargo({ id: id, perms: perms });
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Cargo atualizado com sucesso!" });
+  return res.status(200).json({ message: "Cargo atualizado com successo!" });
 });
 
 router.put("/all", async (req: Request, res: Response) => {
@@ -47,7 +47,7 @@ router.put("/all", async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Ajuste inviados de forma inválida!" });
 
   const dados = await cargosDB.putCargos(ajustes);
-  if (!dados.sucess) return res.status(400).json({ error: dados.error });
+  if (!dados.success) return res.status(400).json({ error: dados.error });
 
   return res.status(200).json({ message: "Cargos atualizados!" });
 });
@@ -57,17 +57,17 @@ router.delete("/", async (req: Request, res: Response) => {
   if (isNaN(id)) return res.status(400).json({ error: "ID não definido!" });
 
   const dados = await cargosDB.getById(id);
-  if (!dados.sucess) return res.status(404).json({ error: "Cargo não encontrado" });
+  if (!dados.success) return res.status(404).json({ error: "Cargo não encontrado" });
 
   const del = await cargosDB.deleteById(id);
-  if (!del.sucess) return res.status(404).json({ error: del.error });
+  if (!del.success) return res.status(404).json({ error: del.error });
 
   return res.status(200).json({ success: true, message: "Cargo deletado!" });
 });
 
 router.delete("/all", async (req: Request, res: Response) => {
   const dados = await cargosDB.deleteAll();
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
   return res.status(200).json({ success: true, message: "Cargos deletados!" });
 });
 

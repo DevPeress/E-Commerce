@@ -4,7 +4,7 @@ describe("Verificar Database", () => {
   it("Deve informar todos os cupons", async () => {
     const result = await produtosDB.getAll();
     expect(result).toMatchObject({
-      sucess: true,
+      success: true,
       data: expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -19,7 +19,7 @@ describe("Verificar Database", () => {
   it("Deve informar que existe o produto do ID", async () => {
     const result = await produtosDB.getById(1);
     expect(result).toEqual({
-      sucess: true,
+      success: true,
       data: expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -34,7 +34,7 @@ describe("Verificar Database", () => {
   it("Deve informar que não existe o produto do ID", async () => {
     const result = await produtosDB.getById(2);
     expect(result).toEqual({
-      sucess: false,
+      success: false,
       error: "Não foi localizado produto com esse ID!",
     });
   });
@@ -42,7 +42,7 @@ describe("Verificar Database", () => {
   it("Deve informar que existe o produto do Nome", async () => {
     const result = await produtosDB.getByName("Teste");
     expect(result).toEqual({
-      sucess: true,
+      success: true,
       data: expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -57,7 +57,7 @@ describe("Verificar Database", () => {
   it("Deve informar que não existe o produto do ID", async () => {
     const result = await produtosDB.getByName("Teste2");
     expect(result).toEqual({
-      sucess: false,
+      success: false,
       error: "Não foi localizado produto com esse nome!",
     });
   });

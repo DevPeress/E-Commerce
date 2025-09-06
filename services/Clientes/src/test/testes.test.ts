@@ -4,7 +4,7 @@ describe("Verificar Database", () => {
   it("Deve informar que os clientes que existem", async () => {
     const result = await clientesDB.getAll();
     expect(result).toEqual({
-      sucess: true,
+      success: true,
       data: expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -24,7 +24,7 @@ describe("Verificar Database", () => {
   it("Deve informar os dados certos do cliente pelo ID", async () => {
     const result = await clientesDB.getById(1);
     expect(result).toEqual({
-      sucess: true,
+      success: true,
       data: expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -44,7 +44,7 @@ describe("Verificar Database", () => {
   it("Deve informar que não existe o cliente com ID", async () => {
     const result = await clientesDB.getById(10);
     expect(result).toEqual({
-      sucess: false,
+      success: false,
       error: "Não existe cliente com essa id",
     });
   });
@@ -52,7 +52,7 @@ describe("Verificar Database", () => {
   it("Deve informar os dados certos do cliente pelo nome", async () => {
     const result = await clientesDB.getByNome("Peres");
     expect(result).toEqual({
-      sucess: true,
+      success: true,
       data: expect.arrayContaining([
         expect.objectContaining({
           id: expect.any(Number),
@@ -72,7 +72,7 @@ describe("Verificar Database", () => {
   it("Deve informar que não existe o cliente com ID", async () => {
     const result = await clientesDB.getByNome("Peres2");
     expect(result).toEqual({
-      sucess: false,
+      success: false,
       error: "Não existe cliente com esse nome!!",
     });
   });

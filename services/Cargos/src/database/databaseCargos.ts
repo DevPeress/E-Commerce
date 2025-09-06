@@ -3,84 +3,84 @@ import logger from "../lib/pino";
 import { Cargos, Criar } from "../types/cargos";
 
 export const cargosDB = {
-  async getAll(): Promise<{ sucess: boolean; data?: Cargos[]; error?: string }> {
+  async getAll(): Promise<{ success: boolean; data?: Cargos[]; error?: string }> {
     try {
       const [rows] = await db.query<Cargos[]>("SELECT * FROM Cargos");
       logger.info("Buscou a lista de cargos");
-      return { sucess: true, data: rows };
+      return { success: true, data: rows };
     } catch (err) {
       logger.error("Cargos GetAll: " + err);
       console.error("Cargos GetAll: ", err);
-      return { sucess: false, error: "Erro ao buscar o cargo!" };
+      return { success: false, error: "Erro ao buscar o cargo!" };
     }
   },
 
-  async getById(id: number): Promise<{ sucess: boolean; data?: Cargos[]; error?: string }> {
+  async getById(id: number): Promise<{ success: boolean; data?: Cargos[]; error?: string }> {
     try {
       const [rows] = await db.query<Cargos[]>("SELECT * FROM Cargos WHERE ID = ?", [id]);
       logger.info("Buscou o cargo de ID: " + id);
-      if (rows.length > 0) return { sucess: true, data: rows };
-      return { sucess: false, error: "Cargo inexistente na empresa!" };
+      if (rows.length > 0) return { success: true, data: rows };
+      return { success: false, error: "Cargo inexistente na empresa!" };
     } catch (err) {
       logger.error("Cargos GetById: " + err);
       console.error("Cargos GetById: ", err);
-      return { sucess: false, error: "Erro ao buscar o cargo pelo ID!" };
+      return { success: false, error: "Erro ao buscar o cargo pelo ID!" };
     }
   },
 
-  async getByCargo(cargo: string): Promise<{ sucess: boolean; data?: Cargos[]; error?: string }> {
+  async getByCargo(cargo: string): Promise<{ success: boolean; data?: Cargos[]; error?: string }> {
     try {
       const [rows] = await db.query<Cargos[]>("SELECT * From Cargos WHERE cargo = ?", [cargo]);
       logger.info("Buscou o cargo: " + cargo);
-      if (rows.length > 0) return { sucess: true, data: rows };
-      return { sucess: false, error: "Cargo inexistente na empresa!" };
+      if (rows.length > 0) return { success: true, data: rows };
+      return { success: false, error: "Cargo inexistente na empresa!" };
     } catch (err) {
       logger.error("Cargos GetByCargo: " + err);
       console.error("Cargos GetByCargo: ", err);
-      return { sucess: false, error: "Erro ao buscar o cargo pelo nome!" };
+      return { success: false, error: "Erro ao buscar o cargo pelo nome!" };
     }
   },
 
   async postCargo(infos: {
     cargo: string;
     perms: string[];
-  }): Promise<{ sucess: boolean; error?: string }> {
+  }): Promise<{ success: boolean; error?: string }> {
     try {
       const dados = await cargosDB.getByCargo(infos.cargo);
-      if (!dados.sucess) return { sucess: false, error: dados.error };
+      if (!dados.success) return { success: false, error: dados.error };
 
       await db.execute("INSERT INTO Cargos(cargo,perms) VALUES(?,?)", [infos.cargo, infos.perms]);
       logger.info("Criou o cargo: " + infos.cargo + " com as permissões: " + infos.perms);
-      return { sucess: true };
+      return { success: true };
     } catch (err) {
       logger.error("Cargos PostCargo: " + err);
       console.error("Cargos PostCargo: ", err);
-      return { sucess: false, error: "Erro ao criar o cargo!!" };
+      return { success: false, error: "Erro ao criar o cargo!!" };
     }
   },
 
   async putCargo(infos: {
     id: number;
     perms: string[];
-  }): Promise<{ sucess: boolean; data?: Cargos[]; error?: string }> {
+  }): Promise<{ success: boolean; data?: Cargos[]; error?: string }> {
     try {
       const dados = await cargosDB.getById(infos.id);
-      if (!dados.sucess || !dados.data) return { sucess: false, error: dados.error };
+      if (!dados.success || !dados.data) return { success: false, error: dados.error };
 
       const [rows] = await db.execute<Cargos[]>("UPDATE Cargos SET perms = ? WHERE id = ?", [
         JSON.stringify(infos.perms),
         infos.id,
       ]);
       logger.info("Atualizou o cargo: " + dados.data[0].cargo + " Perms: " + infos.perms);
-      return { sucess: true, data: rows };
+      return { success: true, data: rows };
     } catch (err) {
       logger.error("Cargos PutCargo: " + err);
       console.error("Cargos PutCargo: ", err);
-      return { sucess: false, error: "Erro ao atualizar o cargo!!" };
+      return { success: false, error: "Erro ao atualizar o cargo!!" };
     }
   },
 
-  async putCargos(ajustes: Criar[]): Promise<{ sucess: boolean; error?: string }> {
+  async putCargos(ajustes: Criar[]): Promise<{ success: boolean; error?: string }> {
     const connection = await db.getConnection();
 
     try {
@@ -97,41 +97,41 @@ export const cargosDB = {
 
       await connection.commit();
       logger.info("Atualizou todos os cargos: " + ajustes);
-      return { sucess: true };
+      return { success: true };
     } catch (err) {
       await connection.rollback();
       logger.error("Cargos PutCargos: " + err);
       console.error("Cargos PutCargos: ", err);
-      return { sucess: false, error: "Erro ao atualizar os cargos" };
+      return { success: false, error: "Erro ao atualizar os cargos" };
     } finally {
       connection.release();
     }
   },
 
-  async deleteById(id: number): Promise<{ sucess: boolean; error?: string }> {
+  async deleteById(id: number): Promise<{ success: boolean; error?: string }> {
     try {
       const dados = await cargosDB.getById(id);
-      if (!dados.sucess || !dados.data) return { sucess: false, error: dados.error };
+      if (!dados.success || !dados.data) return { success: false, error: dados.error };
 
       await db.execute("DELETE FROM Cargos WHERE id = ?", [id]);
       logger.info("Deletou o cargo de nome: " + dados.data[0].cargo);
-      return { sucess: true };
+      return { success: true };
     } catch (err) {
       logger.error("Cargos DeleteById: " + err);
       console.error("Cargos DeleteById: ", err);
-      return { sucess: false, error: "Erro ao deletar o cargo pelo id!" };
+      return { success: false, error: "Erro ao deletar o cargo pelo id!" };
     }
   },
 
-  async deleteAll(): Promise<{ sucess: boolean; error?: string }> {
+  async deleteAll(): Promise<{ success: boolean; error?: string }> {
     try {
       await db.query("DELETE FROM Cargos");
       logger.info("Deletou todos os cargos!");
-      return { sucess: true };
+      return { success: true };
     } catch (err) {
       logger.error("Cargos DeleteAll: " + err);
       console.error("Cargos DeleteAll: ", err);
-      return { sucess: false, error: "Erro ao deletar os cargos!" };
+      return { success: false, error: "Erro ao deletar os cargos!" };
     }
   },
 };

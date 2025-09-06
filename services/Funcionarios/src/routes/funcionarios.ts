@@ -8,7 +8,7 @@ import { authMiddleware } from "../middlewares/auth";
 
 router.get("/", async (req: Request, res: Response) => {
   const dados = await funcionariosDB.getAll();
-  if (!dados.sucess) return res.json(404).json({ error: dados.error });
+  if (!dados.success) return res.json(404).json({ error: dados.error });
   return res.json(dados.data);
 });
 
@@ -17,7 +17,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   if (isNaN(id)) return res.status(400).json({ error: "ID não informado!" });
 
   const dados = await funcionariosDB.getById(id);
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
 
   return res.json(dados.data);
 });
@@ -30,9 +30,9 @@ router.post(
     const data = req.body as FuncionarioInput;
 
     const dados = await funcionariosDB.postFuncionario(data);
-    if (!dados.sucess) return res.status(404).json({ error: dados.error });
+    if (!dados.success) return res.status(404).json({ error: dados.error });
 
-    return res.status(200).json({ message: "Usuário criado com sucesso!" });
+    return res.status(200).json({ message: "Usuário criado com successo!" });
   }
 );
 
@@ -47,10 +47,10 @@ router.put("/", async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Tipo informado não é válido!" });
 
   const dados = await funcionariosDB.getById(id);
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
 
   const insert = await funcionariosDB.putFuncionario(tipo, id, valor);
-  if (!insert.sucess) return res.status(404).json({ error: insert.error });
+  if (!insert.success) return res.status(404).json({ error: insert.error });
 
   return res.status(200).json(insert.data);
 });
@@ -61,13 +61,13 @@ router.put("/all", authMiddleware(["Admin"]), async (req: Request, res: Response
     return res.status(400).json({ error: "Ajuste inviados de forma inválida!" });
 
   const ajustar = await funcionariosDB.putAll(ajustes);
-  if (!ajustar.sucess) return res.status(404).json({ error: ajustar.error });
-  return res.status(200).json("Cargos atualizados com sucesso!");
+  if (!ajustar.success) return res.status(404).json({ error: ajustar.error });
+  return res.status(200).json("Cargos atualizados com successo!");
 });
 
 router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const dados = await funcionariosDB.deleteAll();
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
 
   return res.status(200).json({ message: "Todos os funcionários foram deletados!" });
 });
@@ -77,7 +77,7 @@ router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response
   if (isNaN(id)) return res.status(400).json({ error: "ID não informado!" });
 
   const dados = await funcionariosDB.deleteFuncionario(id);
-  if (!dados.sucess) return res.status(404).json({ error: dados.error });
+  if (!dados.success) return res.status(404).json({ error: dados.error });
 
   return res.status(200).json({ message: "Funcionário deletado!" });
 });
