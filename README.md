@@ -314,7 +314,7 @@ Response
 ```
 Atualizar informação do funcionário
 
-PUT /funcionarios/:id
+PUT /funcionarios
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -341,7 +341,7 @@ Response
 ```
 Atualizar informação errada do funcionário
 
-PUT /funcionarios/:id
+PUT /funcionarios
 Authorization: Bearer <token>
 Content-Type: application/json
 
@@ -355,6 +355,72 @@ Request
 Response
 {
    "error": "Tipo informado não é válido"
+}
+
+```
+
+```
+Deletar um funcionário não sendo admin
+
+DELETE /funcionarios
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Request
+{
+  "id": 1
+}
+
+Response
+{
+   "message": "Acesso negado: apenas Administradores!"
+}
+
+```
+
+```
+Deletar um funcionário sendo admin
+
+DELETE /funcionarios
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Request
+{
+  "id": 1
+}
+
+Response
+{
+   "message": "Funcionário deletado!"
+}
+
+```
+
+```
+Deletar todos os funcionários não sendo admin
+
+DELETE /funcionarios/all
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Response
+{
+   "message": "Acesso negado: apenas Administradores!"
+}
+
+```
+
+```
+Deletar todos os funcionários sendo admin
+
+DELETE /funcionarios/all
+Authorization: Bearer <token>
+Content-Type: application/json
+
+Response
+{
+   "message": "Todos os funcionários foram deletados!"
 }
 
 ```
