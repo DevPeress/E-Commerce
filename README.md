@@ -198,7 +198,7 @@ Content-Type: application/json
 ```
 ### Criar funcionário
 
-POST /employees
+POST /funcionarios
 Authorization: Bearer <token>
 Content-Type: application/json
 
