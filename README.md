@@ -176,12 +176,12 @@ http://localhost:3000
 # 🔑 Autenticação
 
 ```
-### Registro
+Registrar
 
 POST /auth/register
 Content-Type: application/json
 
-### Request
+Request
 {
   "nome": "Peres",
   "email": "admin@empresa.com",
@@ -191,25 +191,25 @@ Content-Type: application/json
   "cep": "11111-111"
 }
 
-### Response
+Response
 {
   "token": "jwt-gerado-aqui"
 }
 ```
 
 ```
-### Login
+Login
 
 POST /auth/login
 Content-Type: application/json
 
-### Request
+Request
 {
   "email": "admin@empresa.com",
   "senha": "123456"
 }
 
-### Response
+Response
 {
   "token": "jwt-gerado-aqui"
 }
@@ -218,13 +218,13 @@ Content-Type: application/json
 # 👤 Funcionários
 
 ```
-### Criar funcionário não sendo Admin
+Criar funcionário não sendo Admin
 
 POST /funcionarios
 Authorization: Bearer <token>
 Content-Type: application/json
 
-### Request
+Request
 
 {
   "nome": "João da Silva",
@@ -235,7 +235,7 @@ Content-Type: application/json
   "cargo_id": 2
 }
 
-### Response
+Response
 {
    message: "Acesso negado: apenas Administradores!"
 }
@@ -243,13 +243,13 @@ Content-Type: application/json
 ```
 
 ```
-### Criar funcionário sendo Admin
+Criar funcionário sendo Admin
 
 POST /funcionarios
 Authorization: Bearer <token>
 Content-Type: application/json
 
-### Request
+Request
 
 {
   "nome": "João da Silva",
@@ -260,7 +260,7 @@ Content-Type: application/json
   "cargo_id": 2
 }
 
-### Response
+Response
 {
    message: "Usuário criado com sucesso!"
 }
@@ -268,12 +268,12 @@ Content-Type: application/json
 ```
 
 ```
-### Pegar a lista de funcionários
+Pegar a lista de funcionários
 
 GET /funcionarios
 Authorization: Bearer <token>
 
-### Response
+Response
 {
    id: 1,
    "nome": "Peres",
@@ -296,12 +296,12 @@ Authorization: Bearer <token>
 ```
 
 ```
-### Pegar a funcionário basiado no seu ID
+Pegar a funcionário basiado no seu ID
 
 GET /funcionarios/:id
 Authorization: Bearer <token>
 
-### Response
+Response
 {
    "nome": "Peres",
    "email": "Peres@gmail.com",
@@ -314,13 +314,13 @@ Authorization: Bearer <token>
 ```
 
 ```
-### Atualizar informação do funcionário
+Atualizar informação do funcionário
 
 PUT /funcionarios/:id
 Authorization: Bearer <token>
 Content-Type: application/json
 
-### Request
+Request
 
 {
   "id": 1,
@@ -328,7 +328,7 @@ Content-Type: application/json
   "valor": 22
 }
 
-### Response
+Response
 {
    "id": 1,
    "nome": "Peres",
@@ -342,13 +342,13 @@ Content-Type: application/json
 ```
 
 ```
-### Atualizar informação errada do funcionário
+Atualizar informação errada do funcionário
 
 PUT /funcionarios/:id
 Authorization: Bearer <token>
 Content-Type: application/json
 
-### Request
+Request
 
 {
   "id": 1,
@@ -356,7 +356,7 @@ Content-Type: application/json
   "valor": "Teste"
 }
 
-### Response
+Response
 {
    "error": "Tipo informado não é válido"
 }
