@@ -108,7 +108,7 @@ router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Respo
   const dados = await clientesDB.deleteAll();
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Usuário deletado!" });
+  return res.status(200).json({ message: "Usuários deletados!" });
 });
 
 export default router;
