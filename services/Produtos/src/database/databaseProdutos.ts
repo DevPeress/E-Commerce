@@ -88,7 +88,7 @@ export const produtosDB = {
     } catch (err) {
       logger.error("Produtos PutProduto: " + err);
       console.error("Produtos PutProduto: ", err);
-      return { success: false, error: "Erro ao criar o produto!" };
+      return { success: false, error: "Erro ao atualizar o produto!" };
     }
   },
 

@@ -69,7 +69,7 @@ router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response
   const dados = await produtosDB.deleteById(id);
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Produtos foi deletado com successo!" });
+  return res.status(200).json({ message: "Produto foi deletado com successo!" });
 });
 
 router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
