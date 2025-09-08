@@ -196,7 +196,32 @@ Content-Type: application/json
 # 👤 Funcionários
 
 ```
-### Criar funcionário
+### Criar funcionário não sendo Admin
+
+POST /funcionarios
+Authorization: Bearer <token>
+Content-Type: application/json
+
+### Request
+
+{
+  "nome": "João da Silva",
+  "email": "joao@empresa.com",
+  "cpf": "111.111.111-11",
+  "idade": 25,
+  "cep": "11111-111",
+  "cargo_id": 2
+}
+
+### Response
+{
+   message: "Acesso negado: apenas Administradores!"
+}
+
+```
+
+```
+### Criar funcionário sendo Admin
 
 POST /funcionarios
 Authorization: Bearer <token>
