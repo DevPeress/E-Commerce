@@ -266,3 +266,31 @@ Content-Type: application/json
 }
 
 ```
+
+```
+### Pegar a lista de funcionários
+
+GET /funcionarios
+Authorization: Bearer <token>
+
+### Response
+{
+   id: 1,
+   "nome": "Peres",
+   "email": "Peres@gmail.com",
+   "cpf": "111.111.111-11",
+   "idade": 21,
+   "cep": "11111-111",
+   "cargo": "Admin",
+},
+{
+   id: 2,
+   "nome": "Fabricio",
+   "email": "Fabricio@gmail.com",
+   "cpf": "222.111.111-11",
+   "idade": 21,
+   "cep": "22111-111",
+   "cargo": "Funcionario",
+}
+
+```
