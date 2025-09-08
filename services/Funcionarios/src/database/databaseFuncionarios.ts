@@ -34,7 +34,9 @@ export const funcionariosDB = {
     }
   },
 
-  async getByEmail(email: string): Promise<{ success: boolean; data?: Usuarios[]; error?: string }> {
+  async getByEmail(
+    email: string
+  ): Promise<{ success: boolean; data?: Usuarios[]; error?: string }> {
     try {
       const [rows] = await db.query<Usuarios[]>(
         "SELECT f.nome, f.email, f.cpf, f.idade, f.cep, c.cargo FROM Funcionarios F JOIN Cargos c ON f.cargo_id = c.id WHERE f.email = ? LIMIT 1",
@@ -58,7 +60,8 @@ export const funcionariosDB = {
         [cpf]
       );
       logger.info("Procurou o funcionário com o CPF: " + cpf);
-      if (rows.length === 0) return { success: false, error: "CPF não possui cadastro na empresa!" };
+      if (rows.length === 0)
+        return { success: false, error: "CPF não possui cadastro na empresa!" };
       return { success: true, data: rows };
     } catch (err) {
       logger.error("Funcionários GetByCpf: " + err);
