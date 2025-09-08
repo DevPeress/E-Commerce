@@ -225,7 +225,6 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 Request
-
 {
   "nome": "João da Silva",
   "email": "joao@empresa.com",
@@ -250,7 +249,6 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 Request
-
 {
   "nome": "João da Silva",
   "email": "joao@empresa.com",
@@ -321,7 +319,6 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 Request
-
 {
   "id": 1,
   "tipo": "idade", -- Pode ser nome, email, cpf, idade, cep ou cargo_id
@@ -349,7 +346,6 @@ Authorization: Bearer <token>
 Content-Type: application/json
 
 Request
-
 {
   "id": 1,
   "tipo": "nomi", 
