@@ -294,3 +294,71 @@ Authorization: Bearer <token>
 }
 
 ```
+
+```
+### Pegar a funcionário basiado no seu ID
+
+GET /funcionarios/:id
+Authorization: Bearer <token>
+
+### Response
+{
+   "nome": "Peres",
+   "email": "Peres@gmail.com",
+   "cpf": "111.111.111-11",
+   "idade": 21,
+   "cep": "11111-111",
+   "cargo": "Admin",
+}
+
+```
+
+```
+### Atualizar informação do funcionário
+
+PUT /funcionarios/:id
+Authorization: Bearer <token>
+Content-Type: application/json
+
+### Request
+
+{
+  "id": 1,
+  "tipo": "idade", -- Pode ser nome, email, cpf, idade, cep ou cargo_id
+  "valor": 22
+}
+
+### Response
+{
+   "id": 1,
+   "nome": "Peres",
+   "email": "Peres@gmail.com",
+   "cpf": "111.111.111-11",
+   "idade": 22,
+   "cep": "11111-111",
+   "cargo": "Admin",
+}
+
+```
+
+```
+### Atualizar informação errada do funcionário
+
+PUT /funcionarios/:id
+Authorization: Bearer <token>
+Content-Type: application/json
+
+### Request
+
+{
+  "id": 1,
+  "tipo": "nomi", 
+  "valor": "Teste"
+}
+
+### Response
+{
+   "error": "Tipo informado não é válido"
+}
+
+```
