@@ -6,7 +6,9 @@ import { LoginInput, RecInput, RegisterInput } from "../schemas/authSchemas";
 import { Cargo, Cargo_Id, Login, Register } from "../types/auth";
 
 export const AuthDB = {
-  async getByEmail(email: string): Promise<{ success: boolean; data?: Register[]; error?: string }> {
+  async getByEmail(
+    email: string
+  ): Promise<{ success: boolean; data?: Register[]; error?: string }> {
     try {
       const [rows] = await db.query<Register[]>(
         "SELECT email FROM Contas WHERE email = ? LIMIT 1",
