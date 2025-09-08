@@ -163,3 +163,59 @@ npm test
 - DELETE /cupom – Remove um cupom
 - DELETE /cupom/all – Remove todos os cupons
 ```
+
+## 🚀 Uso da API
+
+A API expõe endpoints REST para autenticação, funcionários, cargos, produtos, vendas e cupons.
+Por padrão, o servidor roda em:
+
+```
+http://localhost:3000
+```
+
+# 🔑 Autenticação
+
+```
+### Login
+
+POST /auth/login
+Content-Type: application/json
+
+### Request
+{
+  "email": "admin@empresa.com",
+  "senha": "123456"
+}
+
+### Response
+{
+  "token": "jwt-gerado-aqui"
+}
+```
+
+# 👤 Funcionários
+
+```
+### Criar funcionário
+
+POST /employees
+Authorization: Bearer <token>
+Content-Type: application/json
+
+### Request
+
+{
+  "nome": "João da Silva",
+  "email": "joao@empresa.com",
+  "cpf": "111.111.111-11",
+  "idade": 25,
+  "cep": "11111-111",
+  "cargo_id": 2
+}
+
+### Response
+{
+   message: "Usuário criado com sucesso!"
+}
+
+```
