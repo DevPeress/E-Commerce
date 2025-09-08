@@ -56,10 +56,13 @@ export const clientesDB = {
     }
   },
 
-  async getByEmail(email: string): Promise<{ success: boolean; data?: Clientes[]; error?: string }> {
+  async getByEmail(
+    email: string
+  ): Promise<{ success: boolean; data?: Clientes[]; error?: string }> {
     try {
       const [rows] = await db.query<Clientes[]>("SELECT * FROM Clientes WHERE email = ?", [email]);
-      if (rows.length === 0) return { success: false, error: "Não existe cliente com esse email!!" };
+      if (rows.length === 0)
+        return { success: false, error: "Não existe cliente com esse email!!" };
 
       return { success: true, data: rows };
     } catch (err) {
