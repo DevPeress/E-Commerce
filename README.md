@@ -9,7 +9,8 @@
 
 ## Descrição
 
-Sistema back-end modular em TypeScript, estruturado em microsserviços, oferecendo APIs RESTful para gestão de funcionários, cargos, produtos, clientes, cupons e autenticação. Inclui segurança avançada, validação de dados e testes automatizados.
+Sistema **back-end modular** desenvolvido em **TypeScript**, estruturado em **microsserviços** e oferecendo APIs RESTful para gestão de **funcionários, cargos, produtos, clientes, cupons e autenticação**.  
+Conta com **validação de dados, segurança avançada, autenticação via JWT e testes automatizados**.
 
 ## 🧰 Tecnologias Utilizadas
 
