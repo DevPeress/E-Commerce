@@ -1,8 +1,15 @@
 # Empresa
 
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=fff)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=fff)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff)
+![JWT](https://img.shields.io/badge/JWT-black?logo=jsonwebtokens&logoColor=fff)
+![Jest](https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=fff)
+
 ## Descrição
 
-Sistema back-end desenvolvido em TypeScript para gestão de lojas, oferecendo APIs RESTful para gerenciamento de funcionários, produtos e vendas, com foco em segurança, validação de dados e autenticação via JWT.
+Sistema back-end modular em TypeScript, estruturado em microsserviços, oferecendo APIs RESTful para gestão de funcionários, cargos, produtos, clientes, cupons e autenticação. Inclui segurança avançada, validação de dados e testes automatizados.
 
 ## 🧰 Tecnologias Utilizadas
 
