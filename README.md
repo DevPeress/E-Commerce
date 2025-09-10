@@ -12,6 +12,8 @@
 Sistema **back-end modular** desenvolvido em **TypeScript**, estruturado em **microsserviços** e oferecendo APIs RESTful para gestão de **funcionários, cargos, produtos, clientes, cupons e autenticação**.  
 Conta com **validação de dados, segurança avançada, autenticação via JWT e testes automatizados**.
 
+---
+
 ## 🧰 Tecnologias Utilizadas
 
 ### Back-end e Linguagens:
@@ -69,6 +71,26 @@ npm install
 
 # Inicie o servidor de desenvolvimento em cada microsserviço
 npm run dev
+```
+
+### 🔑 Fluxo de Autenticação
+
+1. Registrar usuário (`/auth/register`)  
+2. Fazer login (`/auth/login`) → gera um **JWT**  
+3. Usar o **token** no header `Authorization: Bearer <token>` para acessar endpoints privados  
+
+Exemplo com `curl`:
+```bash
+curl -X POST http://localhost:3000/auth/login \
+-H "Content-Type: application/json" \
+-d '{"email": "admin@empresa.com", "senha": "123456"}'
+```
+
+Resposta:
+```json
+{
+  "token": "jwt-gerado-aqui"
+}
 ```
 
 ## 🧪 Testes
