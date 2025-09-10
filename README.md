@@ -736,8 +736,9 @@ Response
 ```
 Pegar um produto baseado no seu Nome
 
-GET /clientes/nome/Peres
+POST /clientes/nome
 Authorization: Bearer <token>
+Content-Type: application/json
 
 Response
 {
@@ -758,8 +759,9 @@ Response
 ```
 Pegar um produto baseado no seu CPF
 
-GET /clientes/cpf/111.111.111-11
+POST /clientes/cpf
 Authorization: Bearer <token>
+Content-Type: application/json
 
 Response
 {
@@ -779,8 +781,9 @@ Response
 ```
 Pegar um produto baseado no seu E-mail
 
-GET /clientes/cpf/Peres@gmail.com
+POST /clientes/email
 Authorization: Bearer <token>
+Content-Type: application/json
 
 Response
 {
