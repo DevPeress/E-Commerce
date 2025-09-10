@@ -22,8 +22,8 @@ router.get("/id/:id", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
-router.get("/nome/:nome", async (req: Request, res: Response) => {
-  const nome: string = req.params.nome;
+router.post("/nome", async (req: Request, res: Response) => {
+  const { nome } = req.body as { nome: string };
   if (!nome) return res.status(400).json({ error: "Não foi informado o Nome!" });
 
   const dados = await clientesDB.getByNome(nome);
@@ -32,8 +32,8 @@ router.get("/nome/:nome", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
-router.get("/cpf/:cpf", async (req: Request, res: Response) => {
-  const cpf: string = req.params.cpf;
+router.post("/cpf", async (req: Request, res: Response) => {
+  const { cpf } = req.body as { cpf: string };
   if (!cpf) return res.status(400).json({ error: "Não foi informado o CPF!" });
 
   const dados = await clientesDB.getByCpf(cpf);
@@ -42,8 +42,8 @@ router.get("/cpf/:cpf", async (req: Request, res: Response) => {
   return res.json(dados.data);
 });
 
-router.get("/email/:email", async (req: Request, res: Response) => {
-  const email: string = req.params.email;
+router.post("/email", async (req: Request, res: Response) => {
+  const { email } = req.body as { email: string };
   if (!email) return res.status(400).json({ error: "Não foi informado o E-mail!" });
 
   const dados = await clientesDB.getByEmail(email);
