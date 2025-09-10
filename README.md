@@ -124,75 +124,41 @@ npm test
 
 ## 🔐 Endpoints Disponíveis
 
-# Funcionários
+### 🔑 Autenticação
+- `POST /auth/register` → Criar conta  
+- `POST /auth/login` → Login com JWT  
+- `GET /auth/:email` → Verifica se e-mail já existe  
+- `PUT /auth` → Trocar senha  
 
-```
-- GET    /funcionarios – Lista todos os funcionários
-- GET    /funcionarios/:id – Exibe detalhes de um funcionário
-- POST   /funcionarios – Cria um novo funcionário
-- PUT    /funcionarios – Atualiza as informações de um funcionário
-- DELETE /funcionarios – Remove um funcionário
-- DELETE /funcionarios/all – Remove todos os funcionários
-```
+### 👤 Funcionários
+- `GET /funcionarios` → Lista funcionários  
+- `POST /funcionarios` → Criar funcionário  
+- `PUT /funcionarios` → Atualizar funcionário  
+- `DELETE /funcionarios` → Remover funcionário  
 
-# Cargos
+### 🎟️ Cargos
+- `GET /cargos` → Lista cargos  
+- `POST /cargos` → Criar cargo  
+- `PUT /cargos` → Atualizar cargo  
+- `DELETE /cargos` → Remover cargo 
 
-```
-- GET    /cargos – Lista todos os cargos e permissões
-- GET    /cargos/:id – Exibe detalhes de um cargo
-- POST   /cargos – Cria um novo cargo
-- PUT    /cargos – Atualiza as informações de um cargo
-- PUT    /cargos/all – Atualiza todos os cargos
-- DELETE /cargos – Remove um cargo
-- DELETE /cargos/all – Remove todos os cargos
-```
+### 📦 Produtos
+- `GET /produtos` → Lista produtos  
+- `POST /produtos` → Criar produto  
+- `PUT /produtos` → Atualizar produto  
+- `DELETE /produtos` → Remover produto  
 
-# Produtos
+### 🧾 Clientes
+- `GET /clientes` → Lista clientes  
+- `POST /clientes` → Criar cliente  
+- `PUT /clientes` → Atualizar cliente  
+- `DELETE /clientes` → Remover cliente  
 
-```
-- GET    /produtos – Lista todos os produtos
-- GET    /produtos/id/:id – Exibe detalhes de um produto
-- GET    /produtos/nome/:nome – Exibe detalhes de um produto
-- POST   /produtos – Cria um novo produto
-- PUT    /produtos – Atualiza as informações de um produto
-- DELETE /produtos – Remove um produto
-- DELETE /produtos/all – Remove todos os produto
-```
-
-# Clientes
-
-```
-- GET    /clientes – Lista todos os clientes
-- GET    /clientes/id/:id – Exibe detalhes de um cliente
-- GET    /clientes/nome/:nome – Exibe detalhes de um cliente
-- GET    /clientes/cpf/:cpf – Exibe detalhes de um cliente
-- GET    /clientes/email/:email – Exibe detalhes de um cliente
-- POST   /clientes – Cria um novo cliente
-- PUT    /clientes – Atualiza as informações de um cliente
-- PUT    /clientes/all – Atualiza todas as informações de um cliente
-- DELETE /clientes – Remove um cliente
-- DELETE /clientes/all – Remove todos os clientes
-```
-
-# Authentication
-
-```
-- GET    /auth/:email – Verifica se o e-mail possui cadastro
-- POST   /auth/register – Cria uma conta com o e-mail
-- POST   /auth/login – Verificação de Login
-```
-
-# Cupom
-
-```
-- GET    /cupom – Lista todos os cupom
-- GET    /cupom/id/:id – Exibe detalhes de um cupom
-- GET    /cupom/nome/:nome – Exibe detalhes de um cupom
-- POST   /cupom – Cria um novo cupom
-- PUT    /cupom – Atualiza as informações de um cupom
-- DELETE /cupom – Remove um cupom
-- DELETE /cupom/all – Remove todos os cupons
-```
+### 🎟️ Cupons
+- `GET /cupom` → Lista cupons  
+- `POST /cupom` → Criar cupom  
+- `PUT /cupom` → Atualizar cupom  
+- `DELETE /cupom` → Remover cupom  
 
 ## 🚀 Uso da API
 
