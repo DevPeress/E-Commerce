@@ -124,31 +124,31 @@ npm test
 
 ## 🔐 Endpoints Disponíveis
 
-### 🔑 Autenticação
+### 🔑 Autenticação ([exemplos](docs/auth.md))  
 - `POST /auth/register` → Criar conta  
 - `POST /auth/login` → Login com JWT  
 - `GET /auth/:email` → Verifica se e-mail já existe  
 - `PUT /auth` → Trocar senha  
 
-### 👤 Funcionários
+### 👤 Funcionários ([exemplos](docs/funcionarios.md))  
 - `GET /funcionarios` → Lista funcionários  
 - `POST /funcionarios` → Criar funcionário  
 - `PUT /funcionarios` → Atualizar funcionário  
 - `DELETE /funcionarios` → Remover funcionário  
 
-### 🎟️ Cargos
+### 🎟️ Cargos  
 - `GET /cargos` → Lista cargos  
 - `POST /cargos` → Criar cargo  
 - `PUT /cargos` → Atualizar cargo  
 - `DELETE /cargos` → Remover cargo 
 
-### 📦 Produtos
+### 📦 Produtos ([exemplos](docs/produtos.md))  
 - `GET /produtos` → Lista produtos  
 - `POST /produtos` → Criar produto  
 - `PUT /produtos` → Atualizar produto  
 - `DELETE /produtos` → Remover produto  
 
-### 🧾 Clientes
+### 🧾 Clientes ([exemplos](docs/clientes.md))  
 - `GET /clientes` → Lista clientes  
 - `POST /clientes` → Criar cliente  
 - `PUT /clientes` → Atualizar cliente  
