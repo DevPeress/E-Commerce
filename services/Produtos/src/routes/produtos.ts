@@ -48,7 +48,7 @@ router.put("/", validate(updateSchema), async (req: Request, res: Response) => {
   const dados = await produtosDB.putProduto(data);
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Produto foi atualizado com successo!" });
+  return res.status(200).json({ message: "Produto foi atualizado com sucesso!" });
 });
 
 router.put("/all", async (req: Request, res: Response) => {
@@ -59,7 +59,7 @@ router.put("/all", async (req: Request, res: Response) => {
   const dados = await produtosDB.putAll(ajustes);
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Produtos foram atualizados com successo!" });
+  return res.status(200).json({ message: "Produtos foram atualizados com sucesso!" });
 });
 
 router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
@@ -69,14 +69,14 @@ router.delete("/", authMiddleware(["Admin"]), async (req: Request, res: Response
   const dados = await produtosDB.deleteById(id);
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Produto foi deletado com successo!" });
+  return res.status(200).json({ message: "Produto foi deletado com sucesso!" });
 });
 
 router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {
   const dados = await produtosDB.deleteAll();
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Produtos foram deletados com successo!" });
+  return res.status(200).json({ message: "Produtos foram deletados com sucesso!" });
 });
 
 export default router;

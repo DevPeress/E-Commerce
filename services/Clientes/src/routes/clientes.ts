@@ -58,7 +58,7 @@ router.post("/", validate(clienteSchema), async (req: Request, res: Response) =>
   const dados = await clientesDB.postCliente(data);
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(201).json({ message: "Cliente cadastrado com successo!" });
+  return res.status(201).json({ message: "Cliente cadastrado com sucesso!" });
 });
 
 router.put("/", async (req: Request, res: Response) => {

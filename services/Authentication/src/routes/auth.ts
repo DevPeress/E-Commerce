@@ -63,7 +63,7 @@ router.put("/", validate(recSchema), async (req: Request, res: Response) => {
   const dados = await AuthDB.getLogin(data);
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  res.status(200).json({ message: "Senha atualiza com successo!" });
+  res.status(200).json({ message: "Senha atualiza com sucesso!" });
 });
 
 export default router;

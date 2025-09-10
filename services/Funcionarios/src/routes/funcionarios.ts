@@ -32,7 +32,7 @@ router.post(
     const dados = await funcionariosDB.postFuncionario(data);
     if (!dados.success) return res.status(404).json({ error: dados.error });
 
-    return res.status(200).json({ message: "Usuário criado com successo!" });
+    return res.status(200).json({ message: "Usuário criado com sucesso!" });
   }
 );
 
@@ -62,7 +62,7 @@ router.put("/all", authMiddleware(["Admin"]), async (req: Request, res: Response
 
   const ajustar = await funcionariosDB.putAll(ajustes);
   if (!ajustar.success) return res.status(404).json({ error: ajustar.error });
-  return res.status(200).json("Cargos atualizados com successo!");
+  return res.status(200).json("Cargos atualizados com sucesso!");
 });
 
 router.delete("/all", authMiddleware(["Admin"]), async (req: Request, res: Response) => {

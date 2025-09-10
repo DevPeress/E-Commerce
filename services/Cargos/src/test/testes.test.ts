@@ -1,7 +1,7 @@
 import { cargosDB } from "../database/databaseCargos";
 
 describe("Verificar Database", () => {
-  it("Pegar todos os Cargos com successo", async () => {
+  it("Pegar todos os Cargos com sucesso", async () => {
     const dados = await cargosDB.getAll();
     expect(dados).toMatchObject({
       success: true,
@@ -15,7 +15,7 @@ describe("Verificar Database", () => {
     });
   });
 
-  it("Pegar um cargo baseado em ID com successo", async () => {
+  it("Pegar um cargo baseado em ID com sucesso", async () => {
     const dados = await cargosDB.getById(1);
     expect(dados).toEqual({
       success: true,
@@ -37,7 +37,7 @@ describe("Verificar Database", () => {
     });
   });
 
-  it("Pegar um cargo baseado em Cargo com successo", async () => {
+  it("Pegar um cargo baseado em Cargo com sucesso", async () => {
     const dados = await cargosDB.getByCargo("Dono");
     expect(dados).toEqual({
       success: true,

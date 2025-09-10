@@ -28,7 +28,7 @@ router.post("/", async (req: Request, res: Response) => {
   const dados = await cargosDB.postCargo({ cargo: cargo, perms: perms });
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Cargo criado com successo!" });
+  return res.status(200).json({ message: "Cargo criado com sucesso!" });
 });
 
 router.put("/", async (req: Request, res: Response) => {
@@ -38,7 +38,7 @@ router.put("/", async (req: Request, res: Response) => {
   const dados = await cargosDB.putCargo({ id: id, perms: perms });
   if (!dados.success) return res.status(404).json({ error: dados.error });
 
-  return res.status(200).json({ message: "Cargo atualizado com successo!" });
+  return res.status(200).json({ message: "Cargo atualizado com sucesso!" });
 });
 
 router.put("/all", async (req: Request, res: Response) => {
