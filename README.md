@@ -269,7 +269,7 @@ Request
 
 Response
 {
-  "message": "Senha atualiza com successo!"
+  "message": "Senha atualiza com sucesso!"
 }
 ```
 
@@ -577,7 +577,7 @@ Request
 
 Response
 {
-   "message": "Produto foi atualizado com successo!"
+   "message": "Produto foi atualizado com sucesso!"
 }
 
 ```
@@ -615,7 +615,7 @@ Request
 
 Response
 {
-   "message": "Produto foi deletado com successo!"
+   "message": "Produto foi deletado com sucesso!"
 }
 
 ```
@@ -643,7 +643,7 @@ Content-Type: application/json
 
 Response
 {
-   "message": "Produtos foram deletados com successo!"
+   "message": "Produtos foram deletados com sucesso!"
 }
 
 ```
@@ -671,7 +671,7 @@ Request
 
 Response
 {
-  "message": "Cliente cadastrado com successo!"
+  "message": "Cliente cadastrado com sucesso!"
 }
 
 ```
