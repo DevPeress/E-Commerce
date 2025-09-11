@@ -154,7 +154,7 @@ npm test
 - `PUT /clientes` → Atualizar cliente  
 - `DELETE /clientes` → Remover cliente  
 
-### 🎟️ Cupons
+### 🎟️ Cupons ([exemplos](docs/cupom.md))  
 - `GET /cupom` → Lista cupons  
 - `POST /cupom` → Criar cupom  
 - `PUT /cupom` → Atualizar cupom  
