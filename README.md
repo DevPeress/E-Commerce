@@ -159,3 +159,8 @@ npm test
 - `POST /cupom` → Criar cupom  
 - `PUT /cupom` → Atualizar cupom  
 - `DELETE /cupom` → Remover cupom  
+
+## 📌 Melhorias Futuras
+- Implementar Docker e docker-compose
+- Adicionar testes de integração
+- Criar documentação Swagger
