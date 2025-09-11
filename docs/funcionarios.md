@@ -1,31 +1,7 @@
 # 👤 Funcionários
 
 ```
-Criar funcionário não sendo Admin
-
-POST /funcionarios
-Authorization: Bearer <token>
-Content-Type: application/json
-
-Request
-{
-  "nome": "João da Silva",
-  "email": "joao@empresa.com",
-  "cpf": "111.111.111-11",
-  "idade": 25,
-  "cep": "11111-111",
-  "cargo_id": 2
-}
-
-Response
-{
-   message: "Acesso negado: apenas Administradores!"
-}
-
-```
-
-```
-Criar funcionário sendo Admin
+Criar funcionário 
 
 POST /funcionarios
 Authorization: Bearer <token>
@@ -143,26 +119,7 @@ Response
 ```
 
 ```
-Deletar um funcionário não sendo admin
-
-DELETE /funcionarios
-Authorization: Bearer <token>
-Content-Type: application/json
-
-Request
-{
-  "id": 1
-}
-
-Response
-{
-   "message": "Acesso negado: apenas Administradores!"
-}
-
-```
-
-```
-Deletar um funcionário sendo admin
+Deletar um funcionário
 
 DELETE /funcionarios
 Authorization: Bearer <token>
@@ -180,22 +137,9 @@ Response
 
 ```
 
-```
-Deletar todos os funcionários não sendo admin
-
-DELETE /funcionarios/all
-Authorization: Bearer <token>
-Content-Type: application/json
-
-Response
-{
-   "message": "Acesso negado: apenas Administradores!"
-}
 
 ```
-
-```
-Deletar todos os funcionários sendo admin
+Deletar todos os funcionários
 
 DELETE /funcionarios/all
 Authorization: Bearer <token>
