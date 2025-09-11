@@ -80,7 +80,7 @@ Response
 ```
 
 ```
-Pegar um produto baseado no seu Nome
+Pegar um cliente baseado no seu Nome
 
 POST /clientes/nome
 Authorization: Bearer <token>
@@ -103,7 +103,7 @@ Response
 
 
 ```
-Pegar um produto baseado no seu CPF
+Pegar um cliente baseado no seu CPF
 
 POST /clientes/cpf
 Authorization: Bearer <token>
@@ -125,7 +125,7 @@ Response
 ```
 
 ```
-Pegar um produto baseado no seu E-mail
+Pegar um cliente baseado no seu E-mail
 
 POST /clientes/email
 Authorization: Bearer <token>
@@ -194,7 +194,7 @@ Response
 ```
 
 ```
-Deletar um produto 
+Deletar um cliente 
 
 DELETE /clientes
 Authorization: Bearer <token>
