@@ -136,7 +136,7 @@ npm test
 - `PUT /funcionarios` → Atualizar funcionário  
 - `DELETE /funcionarios` → Remover funcionário  
 
-### 🎟️ Cargos  
+### 🎟️ Cargos ([exemplos](docs/cargo.md))  
 - `GET /cargos` → Lista cargos  
 - `POST /cargos` → Criar cargo  
 - `PUT /cargos` → Atualizar cargo  
