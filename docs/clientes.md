@@ -194,26 +194,7 @@ Response
 ```
 
 ```
-Deletar um cliente não sendo admin
-
-DELETE /clientes
-Authorization: Bearer <token>
-Content-Type: application/json
-
-Request
-{
-  "id": 1
-}
-
-Response
-{
-   "message": "Acesso negado: apenas Administradores!"
-}
-
-```
-
-```
-Deletar um produto sendo admin
+Deletar um produto 
 
 DELETE /clientes
 Authorization: Bearer <token>
@@ -232,21 +213,7 @@ Response
 ```
 
 ```
-Deletar todos os funcionários não sendo admin
-
-DELETE /clientes/all
-Authorization: Bearer <token>
-Content-Type: application/json
-
-Response
-{
-   "message": "Acesso negado: apenas Administradores!"
-}
-
-```
-
-```
-Deletar todos os funcionários sendo admin
+Deletar todos os funcionários
 
 DELETE /clientes/all
 Authorization: Bearer <token>
