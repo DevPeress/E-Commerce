@@ -3,7 +3,7 @@
 ```
 Verificar email possui cadastro, já existindo conta
 
-POST /get/admin@gmail.com
+POST /auth/admin@gmail.com
 Content-Type: application/json
 
 Response
@@ -15,7 +15,7 @@ Response
 ```
 Verificar email possui cadastro, não possuindo conta
 
-POST /get/admin@gmail.com
+POST /auth/admin@gmail.com
 Content-Type: application/json
 
 Response
