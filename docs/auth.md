@@ -65,26 +65,7 @@ Response
 ```
 
 ```
-Trocar a senha digitando errado
-
-PUT /auth
-Content-Type: application/json
-
-Request
-{
-  "email": "admin@empresa.com",
-  "senha": "1234567",
-  "senhaNova": "12345"
-}
-
-Response
-{
-  "error": "Senha atual está errada!"
-}
-```
-
-```
-Trocar a senha digitando certo
+Trocar a senha
 
 PUT /auth
 Content-Type: application/json
