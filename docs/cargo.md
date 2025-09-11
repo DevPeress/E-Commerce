@@ -21,7 +21,7 @@ Response
 ```
 
 ```
-Pegar um cupom baseado no id
+Pegar um cargo baseado no id
 
 GET /cargos/1
 Authorization: Bearer <token>
@@ -119,7 +119,7 @@ Response
 ```
 
 ```
-Deletar todos os cupons
+Deletar todos os cargos
 
 DELETE /cargos/all
 Authorization: Bearer <token>
